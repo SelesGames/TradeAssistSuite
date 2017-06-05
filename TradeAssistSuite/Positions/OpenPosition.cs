@@ -15,6 +15,10 @@ namespace TradeAssistSuite
         public decimal CurrentBalance { get; set; }
         public decimal Size { get; set; }
 
+        /// <summary>
+        /// Last price used as cost basis to calculate
+        /// </summary>
+        public decimal LastPrice { get; set; }
         public decimal RealizedProfit { get; set; }
         public decimal UnrealizedProfit { get; set; }
         public decimal CurrentTotalProfit { get; set; }
@@ -25,6 +29,7 @@ namespace TradeAssistSuite
             var priceDifferential = currentPrice - AveragePurchasePrice;
             UnrealizedProfit = Math.Round(priceDifferential * CurrentBalance, 8);
             CurrentTotalProfit = UnrealizedProfit + RealizedProfit;
+            LastPrice = currentPrice;
         }
     }
 }

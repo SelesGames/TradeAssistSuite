@@ -29,13 +29,26 @@ namespace TradeAssistSuite
             switch (command)
             {
                 case "check":
-                    var currency = tokens[1];
-                    await GetTradeHistory(currency);
+                    await CheckCurrency(tokens);
                     break;
 
                 default:
                     Console.WriteLine("Unrecognized command");
                     break;
+            }
+        }
+
+        static async Task CheckCurrency(string[] tokens)
+        {
+            try
+            {
+                var currency = tokens[1];
+                await GetTradeHistory(currency);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Command failed:");
+                Console.WriteLine(ex);
             }
         }
 
@@ -69,6 +82,8 @@ namespace TradeAssistSuite
 
         static async Task GetTradeHistory(string currency)
         {
+            currency = currency.ToUpper();
+
             CurrencyPair currencyPair;
 
             if (CurrencyPair.IsCurrencyPair(currency))

@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BitcoinMath.cs" />
     <Compile Include="Positions\ClosedPosition.cs" />
     <Compile Include="Positions\OpenPosition.cs" />
     <Compile Include="Positions\PositionCalculator.cs" />

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static TradeAssistSuite.BitcoinMath;
 
 namespace TradeAssistSuite
 {
@@ -22,7 +23,7 @@ namespace TradeAssistSuite
 
                 if (trade.Type == OrderType.Buy)
                 {
-                    var fee = Math.Round(trade.Fee * trade.Amount, 8);
+                    var fee = Round(trade.Fee * trade.Amount);
                     size += trade.Amount - fee;
                 }
 
@@ -67,7 +68,7 @@ namespace TradeAssistSuite
                 if (trade.Type == OrderType.Buy)
                 {
                     // Poloniex-specific calculation.  Poloniex takes the fee out of the number of units you get for a purchase.  So as an example, if you purchase 1BTC of a coin, you will only spend 1BTC but you will get less than 1BTC worth of that coin
-                    var tradeTotalFee = Math.Round(trade.Fee * trade.Amount, 8);
+                    var tradeTotalFee = Round(trade.Fee * trade.Amount);
                     numberOfPurchasedUnits += trade.Amount - tradeTotalFee;
                     totalPurchasePrice += trade.Total;
                 }
@@ -75,13 +76,13 @@ namespace TradeAssistSuite
                 {
                     // Poloniex-specific calculation.  Poloniex reduces the amount of BTC received from the purchase by the fee percentage
                     numberOfSoldUnits += trade.Amount;
-                    var tradeTotalFee = Math.Round(trade.Fee * trade.Total, 8);
+                    var tradeTotalFee = Round(trade.Fee * trade.Total);
                     totalSalePrice += trade.Total - tradeTotalFee;
                 }
             }
 
-            var averagePurchasePrice = Math.Round(totalPurchasePrice / numberOfPurchasedUnits, 8);
-            var averageSalePrice = Math.Round(totalSalePrice / numberOfSoldUnits, 8);
+            var averagePurchasePrice = Divide(totalPurchasePrice, numberOfPurchasedUnits);
+            var averageSalePrice = Divide(totalSalePrice, numberOfSoldUnits);
 
             var profit = totalSalePrice - totalPurchasePrice;
 
@@ -117,7 +118,7 @@ namespace TradeAssistSuite
                 if (trade.Type == OrderType.Buy)
                 {
                     // Poloniex-specific calculation.  Poloniex takes the fee out of the number of units you get for a purchase.  So as an example, if you purchase 1BTC of a coin, you will only spend 1BTC but you will get less than 1BTC worth of that coin
-                    var tradeTotalFee = Math.Round(trade.Fee * trade.Amount, 8);
+                    var tradeTotalFee = Round(trade.Fee * trade.Amount);
                     numberOfPurchasedUnits += trade.Amount - tradeTotalFee;
                     totalPurchasePrice += trade.Total;
                 }
@@ -125,25 +126,24 @@ namespace TradeAssistSuite
                 {
                     // Poloniex-specific calculation.  Poloniex reduces the amount of BTC received from the purchase by the fee percentage
                     numberOfSoldUnits += trade.Amount;
-                    var tradeTotalFee = Math.Round(trade.Fee * trade.Total, 8);
+                    var tradeTotalFee = Round(trade.Fee * trade.Total);
                     totalSalePrice += trade.Total - tradeTotalFee;
                 }
             }
 
-            var averagePurchasePrice = Math.Round(totalPurchasePrice / numberOfPurchasedUnits, 8);
-            var averageSalePrice = numberOfSoldUnits == 0 ? 0 :
-                Math.Round(totalSalePrice / numberOfSoldUnits, 8);
+            var averagePurchasePrice = Divide(totalPurchasePrice, numberOfPurchasedUnits);
+            var averageSalePrice = Divide(totalSalePrice, numberOfSoldUnits);
 
             // calculate unrealized profit for units the user still holds
             //var calculatedBalance = numberOfPurchasedUnits - numberOfSoldUnits;
             var priceDifferential = currentPrice - averagePurchasePrice;
-            var unrealizedProfit = Math.Round(priceDifferential * currentBalance, 8);
+            var unrealizedProfit = Round(priceDifferential * currentBalance);
             //var costBasisForUnitsKept = averagePurchasePrice * currentBalance;
             //var currentValueOfBalance = currentPrice * currentBalance;
             //var unrealizedProfit = currentValueOfBalance - costBasisForUnitsKept;
 
             // calculate realized profit for units already sold
-            var costBasisForUnitsSold = Math.Round(averagePurchasePrice * numberOfSoldUnits, 8);
+            var costBasisForUnitsSold = Round(averagePurchasePrice * numberOfSoldUnits);
             var realizedProfit = totalSalePrice - costBasisForUnitsSold;
 
             var currentTotalProfit = realizedProfit + unrealizedProfit;
@@ -161,6 +161,7 @@ namespace TradeAssistSuite
                 CurrentBalance = currentBalance,
                 RealizedProfit = realizedProfit,
                 UnrealizedProfit = unrealizedProfit,
+                LastPrice = currentPrice,
             };
         }
     }
