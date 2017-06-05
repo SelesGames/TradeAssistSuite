@@ -43,6 +43,18 @@ namespace NPoloniex.API.Http
             return ApiHttpClient.PostData<IEnumerable<Trade>>("returnTradeHistory", ApiUrlHttpsRelativeTrading, postData);
         }
 
+        // return type will fail: needs to parse out the JArray and return a new type of collection
+        public Task<IEnumerable<Trade>> GetTrades(DateTime startTime, DateTime endTime)
+        {
+            var postData = new Dictionary<string, string> {
+                { "currencyPair", "ALL" },
+                { "start", NonceCalculator.DateTimeToUnixTimeStamp(startTime).ToString() },
+                { "end", NonceCalculator.DateTimeToUnixTimeStamp(endTime).ToString() }
+            };
+
+            return ApiHttpClient.PostData<IEnumerable<Trade>>("returnTradeHistory", ApiUrlHttpsRelativeTrading, postData);
+        }
+
         async Task<ulong> PostOrder(CurrencyPair currencyPair, OrderType orderType, decimal rate, decimal amount)
         {
             var postData = new Dictionary<string, string> {

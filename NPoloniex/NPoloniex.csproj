@@ -48,6 +48,7 @@
     <Compile Include="API\Http\ApiHttpClient.cs" />
     <Compile Include="API\Http\Authenticator.cs" />
     <Compile Include="API\Http\Balance.cs" />
+    <Compile Include="API\Http\NonceCalculator.cs" />
     <Compile Include="API\Http\OrderType.cs" />
     <Compile Include="API\Http\Trade.cs" />
     <Compile Include="API\Http\Trading.cs" />

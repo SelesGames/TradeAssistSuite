@@ -3,6 +3,7 @@
     public class CurrencyPair
     {
         private const char SeparatorCharacter = '_';
+
         private string fullTextRep;
 
         public string BaseCurrency { get; }
@@ -10,10 +11,10 @@
 
         private CurrencyPair(string stringRep)
         {
+            fullTextRep = stringRep;
             var pairs = stringRep.Split(SeparatorCharacter);
             BaseCurrency = pairs[0];
             QuoteCurrency = pairs[1];
-            fullTextRep = stringRep;
         }
 
         // User-defined conversion from Digit to double
@@ -30,6 +31,7 @@
 
         public CurrencyPair(string baseCurrency, string quoteCurrency)
         {
+            fullTextRep = baseCurrency + SeparatorCharacter + quoteCurrency;
             BaseCurrency = baseCurrency;
             QuoteCurrency = quoteCurrency;
         }
@@ -66,6 +68,16 @@
         public override int GetHashCode()
         {
             return fullTextRep.GetHashCode();
+        }
+
+        public static bool IsCurrencyPair(string input)
+        {
+            return input.Split(SeparatorCharacter).Length == 2;
+        }
+
+        public static CurrencyPair PrependBitcoin(string quoteCurrency)
+        {
+            return new CurrencyPair("BTC", quoteCurrency);
         }
     }
 }

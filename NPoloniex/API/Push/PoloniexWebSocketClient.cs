@@ -13,7 +13,7 @@ namespace NPoloniex.API.Push
 {
     public class PoloniexWebSocketClient
     {
-        static Uri PoloniexWebSocketAddress = new Uri("wss://api2.poloniex.com:443");
+        static readonly Uri PoloniexWebSocketAddress = new Uri("wss://api2.poloniex.com:443");
 
         bool isConnected = false;
         bool isReceiving = false;
@@ -46,9 +46,19 @@ namespace NPoloniex.API.Push
             {
                 var receiveResult = await client.ReceiveAsync(new ArraySegment<byte>(receiveBuffer), CancellationToken.None);
                 var messageLength = receiveResult.Count;
-                var deserialized = readEncoding.GetString(receiveBuffer, 0, messageLength);
 
-                var data = JArray.Parse(deserialized);
+                JArray data = null;
+
+                using (var ms = new MemoryStream(receiveBuffer, 0, messageLength, false))
+                using (var sr = new StreamReader(ms, readEncoding, false))
+                using (var reader = new JsonTextReader(sr))
+                {
+                    data = JArray.Load(reader);
+                }
+
+                //var deserialized = readEncoding.GetString(receiveBuffer, 0, messageLength);
+
+                //var data = JArray.Parse(deserialized);
                 int messageType = data[0].ToObject<int>();
 
                 /*var message = new Message()
@@ -87,10 +97,10 @@ namespace NPoloniex.API.Push
             }
         }
 
-        void OnTicker(dynamic tickerInfo)
+        /*void OnTicker(dynamic tickerInfo)
         {
             Console.WriteLine(tickerInfo);
-        }
+        }*/
 
         void OnTicker(JToken tickerInfo)
         {
@@ -114,16 +124,16 @@ namespace NPoloniex.API.Push
             Ticker.Current.Update(tick);
         }
 
-        IEnumerable<object> ReadMessage()
+        /*IEnumerable<object> ReadMessage()
         {
             using (var ms = new StreamReader(new MemoryStream(receiveBuffer)))
             using (JsonTextReader reader = new JsonTextReader(ms))
             {
                 var first = reader.Value;
-                /*while (reader.Read())
+                while (reader.Read())
                 {
                     yield return reader.Value;
-                }*/
+                }
             }
 
             return new List<object>();
@@ -141,7 +151,7 @@ namespace NPoloniex.API.Push
 
                 return new { messageId, messageVal, currencyId };
             }
-        }
+        }*/
 
         void OnHeartBeat()
         {

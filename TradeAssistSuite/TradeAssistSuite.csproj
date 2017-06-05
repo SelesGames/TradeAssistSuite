@@ -52,6 +52,9 @@
     <Compile Include="Positions\OpenPosition.cs" />
     <Compile Include="Positions\PositionCalculator.cs" />
     <Compile Include="Positions\PositionHistory.cs" />
+    <Compile Include="PrintHelper.cs" />
+    <Compile Include="StinkyBidder\PriceListener.cs" />
+    <Compile Include="StinkyBidder\UserStinkBids.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StinkyBidder\StinkBid.cs" />

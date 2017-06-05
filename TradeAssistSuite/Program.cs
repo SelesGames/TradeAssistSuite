@@ -1,11 +1,12 @@
 ﻿using Newtonsoft.Json;
+using NPoloniex.API;
 using NPoloniex.API.Http;
 using NPoloniex.API.Push;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TradeAssistSuite.StinkyBidder;
+using static TradeAssistSuite.PrintHelper;
 
 namespace TradeAssistSuite
 {
@@ -13,42 +14,68 @@ namespace TradeAssistSuite
     {
         static void Main(string[] args)
         {
-            TestHarness().Wait();
-            //TryStinkyBidder().Wait();
-            Console.ReadLine();
+            Console.WriteLine("Enter a command...");
+            while(true)
+            {
+                ReadInput(Console.ReadLine());
+            }
         }
 
-        static async Task TestHarness()
+        static async void ReadInput(string v)
+        {
+            var tokens = v.Split(' ');
+            var command = tokens.First();
+
+            switch (command)
+            {
+                case "check":
+                    var currency = tokens[1];
+                    await GetTradeHistory(currency);
+                    break;
+
+                default:
+                    Console.WriteLine("Unrecognized command");
+                    break;
+            }
+        }
+
+       /* static async Task TestHarness()
         {
             //await StartWebSocketClient();
             //Thread.Sleep(5);
             await GetTradeHistory();
-        }
+        }*/
 
-        static async Task StartWebSocketClient()
+        /*static async Task StartWebSocketClient()
         {
             PoloniexWebSocketClient client = new PoloniexWebSocketClient();
             await client.Connect();
             await client.SubscribeToTicker();
 
-            //Ticker.Current.Subscribe("BTC_ETH", ProcessTick);
-        }
+            Ticker.Current.Subscribe("BTC_ETH", ProcessTick);
+        }*/
 
-        static void ProcessTick(Tick tick)
+        /*static void ProcessTick(Tick tick)
         {
             var output = new object[] { tick.CurrencyPair.ToString(), tick.Last, tick.HighestBid, tick.LowestAsk };
             var outputString = JsonConvert.SerializeObject(output, Formatting.None);
             Console.WriteLine(outputString);
         }
 
-        static Task TryStinkyBidder()
+        static async Task TryStinkyBidder()
         {
-            return TradeSubmitter.ExecuteStinkBid();
-        }
+            await PriceListener.Initialize();
+        }*/
 
-        static async Task GetTradeHistory()
+        static async Task GetTradeHistory(string currency)
         {
-            var currencyPair = "BTC_STRAT";
+            CurrencyPair currencyPair;
+
+            if (CurrencyPair.IsCurrencyPair(currency))
+                currencyPair = currency;
+            else
+                currencyPair = CurrencyPair.PrependBitcoin(currency);
+
 
             var authenticator = new Authenticator(
                 "F5QR8MJE-HN5LH4WJ-8X9758YH-NDLRE7NJ",
@@ -61,7 +88,7 @@ namespace TradeAssistSuite
             //var currentTick = Ticker.Current[currencyPair];
             //var currentPrice = currentTick.Last;
 
-            var balance = balances["STRAT"];
+            var balance = balances[currencyPair.QuoteCurrency];
             var balanceSize = balance.Available + balance.OnOrders;
             var currentValue = balance.BtcValue;
 
@@ -69,7 +96,8 @@ namespace TradeAssistSuite
             var roundedCalculatedCurrentPrice = Math.Round(calculatedCurrentPrice, 8);
 
             var positionHistory = PositionCalculator.ExtractPositions(balanceSize, roundedCalculatedCurrentPrice, trades);
-            Console.WriteLine(positionHistory);
+
+            PrettyPrint(positionHistory.Open);
         }
     }
 }

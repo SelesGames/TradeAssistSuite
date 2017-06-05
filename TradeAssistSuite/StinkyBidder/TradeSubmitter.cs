@@ -6,10 +6,35 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TradeAssistSuite.StinkyBidder
+namespace TradeAssistSuite
 {
     public static class TradeSubmitter
     {
+        public static async Task<ulong> ExecuteStinkBid(User user, StinkBid stinkBid)
+        {
+            var publicKey = user.PublicKey;
+            var privateKey = user.PrivateKey;
+
+            var authenticator = new Authenticator(publicKey, privateKey);
+            var client = new ApiHttpClient(authenticator);
+
+            var balances = await client.Wallet.GetCompleteBalances();
+            var btcBalance = balances["BTC"];
+            var availableBtc = btcBalance.Available;
+
+            var allowance = Math.Min(stinkBid.Amount, availableBtc);
+            var rate = stinkBid.BuyPrice;
+            var purchaseAmount = Math.Round(allowance / rate, 8);
+
+            var orderNumber = await client.Trading.Buy(stinkBid.CurrencyPair, rate, purchaseAmount);
+
+            return orderNumber;
+
+            //var isCancelled = await client.Trading.CancelOrder(stinkBid.CurrencyPair, orderNumber);
+
+            //Console.WriteLine(isCancelled);
+        }
+
         public static async Task ExecuteStinkBid()
         {
             var authenticator = new Authenticator(
