@@ -1,5 +1,7 @@
-﻿using System;
+﻿using NPoloniex.API.Http;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace NPoloniex.API.Push
 {
@@ -12,30 +14,56 @@ namespace NPoloniex.API.Push
 
         Dictionary<CurrencyPair, Tick> map = new Dictionary<CurrencyPair, Tick>();
         TickerSubscriptions subscriptions = new TickerSubscriptions();
+        BootupStatus status = BootupStatus.None;
 
-        public Tick this[CurrencyPair key]
+        public async Task Initialize()
         {
-            get
+            if (status == BootupStatus.Initializing || status == BootupStatus.Initialized)
+                return;
+
+            status = BootupStatus.Initializing;
+
+            var client = new ApiHttpClient();
+            var dict = await client.Public.GetTicker();
+            foreach (var item in dict)
             {
-                return map[key];
+                var val = item.Value;
+                var tick = new Tick
+                {
+                    CurrencyPair = item.Key,
+                    Last = val.Last,
+                    LowestAsk = val.LowestAsk,
+                    HighestBid = val.HighestBid,
+                    PercentChange = val.PercentChange,
+                    BaseVolume = val.BaseVolume,
+                    QuoteVolume = val.Quotevolume,
+                    IsFrozen = val.IsFrozen,
+                };
+                map[tick.CurrencyPair] = tick;
             }
+
+            status = BootupStatus.Initialized;
         }
+
+        public Tick this[CurrencyPair key] => GetCurrentPrice(key);
 
         public Tick GetCurrentPrice(CurrencyPair currencyPair)
         {
-            return map[currencyPair];
+            if (status == BootupStatus.Initialized)
+            {
+                if (map.TryGetValue(currencyPair, out var tick))
+                    return tick;
+                else
+                    throw new KeyNotFoundException($"Could not find {currencyPair.ToString()} in the Ticker");
+            }
+            else
+                throw new UnauthorizedAccessException("Must call and await \"Markets.Initialize() before accessing CurrencyPairs");
         }
 
         public void Update(Tick tick)
         {
             var key = tick.CurrencyPair;
-
-            /*if (map.ContainsKey(key))
-                map[key] = tick;
-            else
-                map.Add(key, tick);*/
             map[key] = tick;
-
             subscriptions.NotifySubscribers(key, tick);
         }
 

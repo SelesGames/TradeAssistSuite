@@ -1,10 +1,12 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace NPoloniex.API.Http
 {
@@ -26,26 +28,33 @@ namespace NPoloniex.API.Http
         public Trading Trading { get; }
         public Wallet Wallet { get; }
 
-        public ApiHttpClient(Authenticator authenticator)
+        public Public Public { get; }
+
+        public ApiHttpClient()
         {
             BaseUrl = ApiUrlHttpsBase;
-            this.authenticator = authenticator;
             Trading = new Trading(this);
-            Wallet = new Http.Wallet(this);
+            Wallet = new Wallet(this);
+            Public = new Public(this);
         }
 
-       /* public T GetData<T>(string command, params object[] parameters)
+        public ApiHttpClient(Authenticator authenticator) : base()
         {
-            var relativeUrl = CreateRelativeUrl(command, parameters);
+            this.authenticator = authenticator;
+        }
 
-            var jsonString = QueryString(relativeUrl);
-            var output = JsonSerializer.DeserializeObject<T>(jsonString);
-
-            return output;
-        }*/
+        public async Task<T> GetData<T>(string command, string relativeUrl)
+        {
+            var url = $"{BaseUrl}{relativeUrl}?command={command}";
+            var response = await innerClient.GetAsync(url);
+            var responseObject = await DeserializeResponseJson<T>(response);
+            return responseObject;
+        }
 
         public async Task<T> PostData<T>(string command, string relativeUrl, Dictionary<string, string> postData)
         {
+            if (authenticator == null) throw new Exception("Cannot use the private api without Authenticator set");
+            
             // add command and nonce
             postData.Add("command", command);
             postData.Add("nonce", NonceCalculator.GetCurrentHttpPostNonce());
@@ -56,12 +65,17 @@ namespace NPoloniex.API.Http
                 Content = content,
             };
 
+            // sign the content, using the credentials stored in the Authenticator
             var contentBytes = await content.ReadAsByteArrayAsync();
-
             authenticator.SignRequest(request, contentBytes);
 
             var response = await innerClient.SendAsync(request);
+            var responseObject = await DeserializeResponseJson<T>(response);
+            return responseObject;
+        }
 
+        async Task<T> DeserializeResponseJson<T>(HttpResponseMessage response)
+        {
             T responseObject = default(T);
             Exception deserializeException = null;
 
@@ -74,7 +88,7 @@ namespace NPoloniex.API.Http
                     responseObject = jsonSerializer.Deserialize<T>(jr);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 deserializeException = ex;
             }

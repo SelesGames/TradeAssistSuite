@@ -32,9 +32,33 @@ namespace TradeAssistSuite
                     await CheckCurrency(tokens);
                     break;
 
+                case "start":
+                    await Start(tokens);
+                    break;
+
                 default:
                     Console.WriteLine("Unrecognized command");
                     break;
+            }
+        }
+
+        static async Task Start(string[] tokens)
+        {
+            try
+            {
+                var input = tokens[1];
+                if (input == "ticker")
+                {
+                    await Ticker.Current.Initialize();
+                    /*PoloniexWebSocketClient client = new PoloniexWebSocketClient();
+                    await client.Connect();
+                    await client.SubscribeToTicker();*/
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Command failed:");
+                Console.WriteLine(ex);
             }
         }
 

@@ -48,17 +48,20 @@
     <Compile Include="API\Http\ApiHttpClient.cs" />
     <Compile Include="API\Http\Authenticator.cs" />
     <Compile Include="API\Http\Balance.cs" />
+    <Compile Include="API\Http\MarketData.cs" />
     <Compile Include="API\Http\NonceCalculator.cs" />
     <Compile Include="API\Http\OrderType.cs" />
+    <Compile Include="API\Http\Services\Public.cs" />
     <Compile Include="API\Http\Trade.cs" />
-    <Compile Include="API\Http\Trading.cs" />
-    <Compile Include="API\Http\Wallet.cs" />
+    <Compile Include="API\Http\Services\Trading.cs" />
+    <Compile Include="API\Http\Services\Wallet.cs" />
     <Compile Include="API\Push\Markets.cs" />
     <Compile Include="API\Push\MarketsHelper.cs" />
     <Compile Include="API\Push\PoloniexWebSocketClient.cs" />
     <Compile Include="API\Push\Tick.cs" />
     <Compile Include="API\Push\Ticker.cs" />
     <Compile Include="API\Push\TickerSubscriptions.cs" />
+    <Compile Include="BootupStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

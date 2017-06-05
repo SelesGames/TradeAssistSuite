@@ -13,7 +13,8 @@ namespace TradeAssistSuite
         public decimal AverageSalePrice { get; set; }
 
         public decimal CurrentBalance { get; set; }
-        public decimal Size { get; set; }
+        public decimal TotalAmountPurchased { get; set; }
+        public decimal TotalAmountSold { get; set; }
 
         /// <summary>
         /// Last price used as cost basis to calculate

@@ -154,9 +154,10 @@ namespace TradeAssistSuite
             {
                 Began = firstTrade.Date,
                 FirstTrade = firstTrade,
-                AveragePurchasePrice = Math.Round(averagePurchasePrice, 8),
-                AverageSalePrice = Math.Round(averageSalePrice, 8),
-                Size = numberOfPurchasedUnits,
+                AveragePurchasePrice = averagePurchasePrice,
+                AverageSalePrice = averageSalePrice,
+                TotalAmountPurchased = numberOfPurchasedUnits,
+                TotalAmountSold = numberOfSoldUnits,
                 CurrentTotalProfit = currentTotalProfit,
                 CurrentBalance = currentBalance,
                 RealizedProfit = realizedProfit,

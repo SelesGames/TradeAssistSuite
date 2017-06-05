@@ -9,8 +9,6 @@ namespace NPoloniex.API.Push
         static Dictionary<int, CurrencyPair> currencyPairs;
         static DateTime lastRefreshed;
         static BootupStatus status = BootupStatus.None;
-        enum BootupStatus { None, Initializing, Initialized };
-
 
         public static Dictionary<int, CurrencyPair> CurrencyPairs => GetCurrencyPairs();
 
