@@ -14,11 +14,14 @@ namespace TradeAssistSuite
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Enter a command...");
+            MyActorSystem.Current.Initialize().Wait();
+            /*Console.WriteLine("Enter a command...");
             while(true)
             {
                 ReadInput(Console.ReadLine());
-            }
+            }*/
+
+            Console.ReadLine();
         }
 
         static async void ReadInput(string v)
