@@ -46,7 +46,7 @@ namespace TradeAssistSuite
             
             var mockStinkBid = new StinkBid
             {
-                Amount = 5m,
+                AmountInBtc = 5m,
                 BuyPrice = 0.00000001m,
                 CurrencyPair = "BTC_ETH",
             };

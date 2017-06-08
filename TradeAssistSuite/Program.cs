@@ -1,12 +1,11 @@
-﻿using Newtonsoft.Json;
-using NPoloniex.API;
+﻿using NPoloniex.API;
 using NPoloniex.API.Http;
 using NPoloniex.API.Push;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using static TradeAssistSuite.PrintHelper;
+using Akka.Actor;
 
 namespace TradeAssistSuite
 {
@@ -15,6 +14,25 @@ namespace TradeAssistSuite
         static void Main(string[] args)
         {
             MyActorSystem.Current.Initialize().Wait();
+
+            decimal triggerPrice = 0.00389m;
+
+            var stinkBids = Enumerable.Range(1, 1).Select(o =>
+                new StinkBid
+                {
+                    AmountInBtc = 0.0001m,
+                    BuyPrice = triggerPrice - (decimal)o * 0.000001m,
+                    TriggerPrice = triggerPrice - (decimal)o * 0.000001m,
+                    CurrencyPair = "BTC_STRAT",
+                    UserId = o,
+                });
+
+            var monitorRef = MyActorSystem.Current.GetMonitor("BTC_STRAT");
+            foreach (var item in stinkBids)
+            {
+                monitorRef.Tell(item);
+            }
+
             /*Console.WriteLine("Enter a command...");
             while(true)
             {

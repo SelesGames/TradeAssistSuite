@@ -38,7 +38,7 @@ namespace NPoloniex.API.Http
             Public = new Public(this);
         }
 
-        public ApiHttpClient(Authenticator authenticator) : base()
+        public ApiHttpClient(Authenticator authenticator) : this()
         {
             this.authenticator = authenticator;
         }

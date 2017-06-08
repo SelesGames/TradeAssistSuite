@@ -65,6 +65,7 @@
     <Compile Include="StinkyBidder\Actors\Executor.cs" />
     <Compile Include="StinkyBidder\Actors\Monitor.cs" />
     <Compile Include="StinkyBidder\PriceListener.cs" />
+    <Compile Include="StinkyBidder\TickToMonitorBridge.cs" />
     <Compile Include="StinkyBidder\UserStinkBids.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

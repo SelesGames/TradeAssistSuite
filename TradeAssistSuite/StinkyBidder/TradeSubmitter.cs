@@ -22,7 +22,7 @@ namespace TradeAssistSuite
             var btcBalance = balances["BTC"];
             var availableBtc = btcBalance.Available;
 
-            var allowance = Math.Min(stinkBid.Amount, availableBtc);
+            var allowance = Math.Min(stinkBid.AmountInBtc, availableBtc);
             var rate = stinkBid.BuyPrice;
             var purchaseAmount = Math.Round(allowance / rate, 8);
 
@@ -48,12 +48,12 @@ namespace TradeAssistSuite
 
             var stinkBid = new StinkBid
             {
-                Amount = 5m,
+                AmountInBtc = 5m,
                 BuyPrice = 0.00000001m,
                 CurrencyPair = "BTC_ETH",
             };
 
-            var allowance = Math.Min(stinkBid.Amount, availableBtc);
+            var allowance = Math.Min(stinkBid.AmountInBtc, availableBtc);
             var rate = stinkBid.BuyPrice;
             var purchaseAmount = Math.Round(allowance / rate, 8);
 

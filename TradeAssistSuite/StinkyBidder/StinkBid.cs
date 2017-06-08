@@ -11,7 +11,7 @@ namespace TradeAssistSuite
         public CurrencyPair CurrencyPair { get; set; }
         public decimal TriggerPrice { get; set; }
         public decimal BuyPrice { get; set; }
-        public decimal Amount { get; set; }
+        public decimal AmountInBtc { get; set; }
         public StinkBidOrderStatus OrderStatus { get; set; }
     }
 

@@ -46,6 +46,8 @@ namespace TradeAssistSuite.StinkyBidder.Actors
                 stinkBids.Insert(binarySearchIndex, stinkBid);
             }
 
+            Console.WriteLine($"SB received for monitor {currencyPair}: {currencyPair} at TriggerPrice {stinkBid.TriggerPrice}");
+
             return true;
         }
 
@@ -53,6 +55,8 @@ namespace TradeAssistSuite.StinkyBidder.Actors
         {
             if (tick.CurrencyPair != currencyPair)
                 return false;
+
+            //Console.WriteLine($"Price change: {currencyPair} last: {tick.Last}");
 
             var currentPrice = Math.Min(tick.Last, tick.LowestAsk);
 
@@ -68,14 +72,15 @@ namespace TradeAssistSuite.StinkyBidder.Actors
                 Queue(stinkBid);
             }
 
-            stinkBids.RemoveRange(0, index);
+            if (index > 0)
+                stinkBids.RemoveRange(0, index);
 
             return true;
         }
 
         void Queue(StinkBid stinkBid)
         {
-            // send message to database here to update the stinkbid status
+            Console.WriteLine($"Queued sb for execution: {stinkBid.CurrencyPair} at {stinkBid.TriggerPrice}");
             var receiver = MyActorSystem.Current.GetExecutor();
             receiver.Tell(stinkBid);
         }
@@ -84,7 +89,7 @@ namespace TradeAssistSuite.StinkyBidder.Actors
         {
             public int Compare(StinkBid x, StinkBid y)
             {
-                return x.TriggerPrice.CompareTo(y.TriggerPrice);
+                return ~x.TriggerPrice.CompareTo(y.TriggerPrice);
             }
         }
     }
