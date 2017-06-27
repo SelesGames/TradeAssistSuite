@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace TradeAssistSuite
+namespace TradeAssist.Suite
 {
     public static class PrintHelper
     {

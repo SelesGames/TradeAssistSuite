@@ -1,7 +1,7 @@
 ﻿using NPoloniex.API.Http;
 using System;
 
-namespace TradeAssistSuite
+namespace TradeAssist.Suite
 {
     public class ClosedPosition
     {

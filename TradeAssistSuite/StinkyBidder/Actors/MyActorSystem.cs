@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TradeAssistSuite.StinkyBidder;
-using TradeAssistSuite.StinkyBidder.Actors;
+using TradeAssist.Suite.StinkyBidder;
+using TradeAssist.Suite.StinkyBidder.Actors;
 
-namespace TradeAssistSuite
+namespace TradeAssist.Suite
 {
     /// <summary>
     /// Entry point for the actor system, including all initialization

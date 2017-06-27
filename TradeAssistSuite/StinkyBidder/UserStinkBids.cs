@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TradeAssistSuite
+namespace TradeAssist.Suite
 {
     public class Users : List<User>
     {

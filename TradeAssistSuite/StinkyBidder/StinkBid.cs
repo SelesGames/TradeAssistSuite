@@ -1,6 +1,6 @@
 ﻿using NPoloniex.API;
 
-namespace TradeAssistSuite
+namespace TradeAssist.Suite
 {
     /// <summary>
     /// Represents a "stink bid", a low bid which won't eat into the user's BTC balance as an open order

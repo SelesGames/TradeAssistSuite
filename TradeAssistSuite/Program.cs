@@ -4,15 +4,23 @@ using NPoloniex.API.Push;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using static TradeAssistSuite.PrintHelper;
+using static TradeAssist.Suite.PrintHelper;
 using Akka.Actor;
 
-namespace TradeAssistSuite
+namespace TradeAssist.Suite
 {
     class Program
     {
         static void Main(string[] args)
         {
+            var bittrexHub = new NBittrex.BittrexHub();
+            bittrexHub.Initialize().Wait();
+            bittrexHub.SubscribeToTicker("BTC-ANT").Wait();
+            Console.ReadLine();
+
+            return;
+
+
             MyActorSystem.Current.Initialize().Wait();
 
             decimal triggerPrice = 0.00389m;

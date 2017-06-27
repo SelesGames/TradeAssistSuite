@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static TradeAssistSuite.BitcoinMath;
+using static TradeAssist.Suite.BitcoinMath;
 
-namespace TradeAssistSuite
+namespace TradeAssist.Suite
 {
     public static class PositionCalculator
     {

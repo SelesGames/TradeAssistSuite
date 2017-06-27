@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TradeAssistSuite.StinkyBidder
+namespace TradeAssist.Suite.StinkyBidder
 {
     class TickToMonitorBridge
     {

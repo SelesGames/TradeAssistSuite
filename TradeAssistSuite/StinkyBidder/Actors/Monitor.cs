@@ -4,7 +4,7 @@ using NPoloniex.API.Push;
 using System;
 using System.Collections.Generic;
 
-namespace TradeAssistSuite.StinkyBidder.Actors
+namespace TradeAssist.Suite.StinkyBidder.Actors
 {
     /// <summary>
     /// Class that monitors price changes, and manages a list of all StinkBids for a particular 

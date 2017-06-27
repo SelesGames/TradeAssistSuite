@@ -71,13 +71,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StinkyBidder\StinkBid.cs" />
     <Compile Include="StinkyBidder\TradeSubmitter.cs" />
-    <Compile Include="UserId.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NBittrex\NBittrex.csproj">
+      <Project>{b45a59a3-82f2-4698-81ff-d6d4d63bfbea}</Project>
+      <Name>NBittrex</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NPoloniex\NPoloniex.csproj">
       <Project>{2bdefdc6-e211-453f-b160-a2f9b3f83ec5}</Project>
       <Name>NPoloniex</Name>
@@ -88,6 +91,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
+  <Import Project="..\TradeAssist.Common\TradeAssist.Common.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

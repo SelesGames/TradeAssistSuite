@@ -6,8 +6,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TradeAssist;
 
-namespace TradeAssistSuite.StinkyBidder.Actors
+namespace TradeAssist.Suite.StinkyBidder.Actors
 {
     public class Executor : ReceiveActor
     {

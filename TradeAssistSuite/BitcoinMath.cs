@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TradeAssistSuite
+namespace TradeAssist.Suite
 {
     public static class BitcoinMath
     {

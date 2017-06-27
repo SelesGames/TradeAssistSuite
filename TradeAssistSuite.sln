@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeAssistSuite", "TradeAssistSuite\TradeAssistSuite.csproj", "{B2018FCA-AE99-4046-AD4F-D82E720452FD}"
 EndProject
@@ -9,7 +9,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoloniexApi.Net", "Poloniex
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPoloniex", "NPoloniex\NPoloniex.csproj", "{2BDEFDC6-E211-453F-B160-A2F9B3F83EC5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeAssist.DocumentStorage", "TradeAssist.DocumentStorage\TradeAssist.DocumentStorage.csproj", "{A9CDF953-F469-409B-9A76-207E3B4AEF33}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "TradeAssist.Common", "TradeAssist.Common\TradeAssist.Common.shproj", "{B4F33FDC-2A43-48D5-9854-0E3838B62A98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NBittrex", "NBittrex\NBittrex.csproj", "{B45A59A3-82F2-4698-81FF-D6D4D63BFBEA}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		TradeAssist.Common\TradeAssist.Common.projitems*{a9cdf953-f469-409b-9a76-207e3b4aef33}*SharedItemsImports = 4
+		TradeAssist.Common\TradeAssist.Common.projitems*{b2018fca-ae99-4046-ad4f-d82e720452fd}*SharedItemsImports = 4
+		TradeAssist.Common\TradeAssist.Common.projitems*{b4f33fdc-2a43-48d5-9854-0e3838b62a98}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -27,6 +38,14 @@ Global
 		{2BDEFDC6-E211-453F-B160-A2F9B3F83EC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BDEFDC6-E211-453F-B160-A2F9B3F83EC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BDEFDC6-E211-453F-B160-A2F9B3F83EC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9CDF953-F469-409B-9A76-207E3B4AEF33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9CDF953-F469-409B-9A76-207E3B4AEF33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9CDF953-F469-409B-9A76-207E3B4AEF33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9CDF953-F469-409B-9A76-207E3B4AEF33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B45A59A3-82F2-4698-81FF-D6D4D63BFBEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B45A59A3-82F2-4698-81FF-D6D4D63BFBEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B45A59A3-82F2-4698-81FF-D6D4D63BFBEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B45A59A3-82F2-4698-81FF-D6D4D63BFBEA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

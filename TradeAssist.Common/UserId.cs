@@ -1,30 +1,37 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.Runtime.Serialization;
 
-namespace TradeAssistSuite
+namespace TradeAssist
 {
     public struct UserId
     {
         string userId;
 
+        [JsonConstructor]
+        private UserId(string userId)
+        {
+            this.userId = userId;
+        }
+
         public static implicit operator UserId(string userId)
         {
-            var o = new UserId();
-            o.userId = userId;
-            return o;
+            return new UserId(userId);
         }
 
         public static implicit operator UserId(Guid userId)
         {
-            var o = new UserId();
-            o.userId = userId.ToString();
-            return o;
+            return new UserId(userId.ToString());
         }
 
         public static implicit operator UserId(int userId)
         {
-            var o = new UserId();
-            o.userId = userId.ToString();
-            return o;
+            return new UserId(userId.ToString());
+        }
+
+        public static implicit operator string(UserId userId)
+        {
+            return userId.ToString();
         }
 
         public override string ToString()
