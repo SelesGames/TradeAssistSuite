@@ -153,16 +153,16 @@ namespace TradeAssist.Web.Controllers
             //Rfc6238AuthenticationService
             GoogleAuthenticatorService<ApplicationUser> authService = null;
             var secretKey = authService.GenerateSecret();
-            string userName = User.Identity.Name;
+            //string userName = User.Identity.Name;
             string issuer = "TradeAssist";
             //string issuerEncoded = HttpUtility.UrlEncode(issuer);
-            string barcodeUrl = KeyUrl.GetTotpUrl(secretKey, userName) + "&issuer=" + issuer;
-            string barcodeUrl = _userManager.two
+            //string barcodeUrl = KeyUrl.GetTotpUrl(secretKey, userName) + "&issuer=" + issuer;
+            //string barcodeUrl = _userManager.two
 
             var model = new GoogleAuthenticatorViewModel
             {
                 SecretKey = secretKey,
-                BarcodeUrl = barcodeUrl
+                //BarcodeUrl = barcodeUrl
             };
 
             return View(model);
