@@ -3,19 +3,30 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using TradeAssist.Web.Models;
 
 namespace TradeAssist.Web.TwoFactor
 {
-    public class GoogleAuthenticatorService<TUser> : TotpSecurityStampBasedTokenProvider<TUser> where TUser : class
+    public class GoogleAuthenticatorService : TotpSecurityStampBasedTokenProvider<ApplicationUser>
     {
         static readonly DateTime UNIX_EPOCH = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
-        public override Task<bool> CanGenerateTwoFactorTokenAsync(UserManager<TUser> manager, TUser user)
+        public override Task<bool> CanGenerateTwoFactorTokenAsync(UserManager<ApplicationUser> manager, ApplicationUser user)
         {
             return manager.GetTwoFactorEnabledAsync(user);
         }
 
-        public string GenerateSecret()
+        public override Task<string> GetUserModifierAsync(string purpose, UserManager<ApplicationUser> manager, ApplicationUser user)
+        {
+            return Task.FromResult(user.GoogleAuthenticatorSecretKey);
+        }
+
+        public override Task<string> GenerateAsync(string purpose, UserManager<ApplicationUser> manager, ApplicationUser user)
+        {
+            return Task.FromResult(user.GoogleAuthenticatorSecretKey);
+        }
+
+        /*public string GenerateSecret()
         {
             byte[] buffer = new byte[9];
 
@@ -25,9 +36,9 @@ namespace TradeAssist.Web.TwoFactor
             }
 
             return Convert.ToBase64String(buffer).Substring(0, 10).Replace('/', '0').Replace('+', '1');
-        }
+        }*/
 
-        public string GetCode(string secret, long counter)
+        /*public string GetCode(string secret, long counter)
         {
             return GeneratePassword(secret, counter);
         }
@@ -40,11 +51,12 @@ namespace TradeAssist.Web.TwoFactor
         public long GetCurrentCounter()
         {
             return GetCurrentCounter(DateTime.UtcNow, UNIX_EPOCH, 30);
-        }
+        }*/
 
         public bool IsValid(string secret, string code, int checkAdjacentIntervals = 1)
         {
-            if (code == GetCode(secret))
+            return GoogleAuthenticatorHelper.IsValid(Base32.FromBase32(secret), code);
+           /* if (code == GetCode(secret))
                 return true;
 
             for (int i = 1; i <= checkAdjacentIntervals; i++)
@@ -56,15 +68,16 @@ namespace TradeAssist.Web.TwoFactor
                     return true;
             }
 
-            return false;
+            return false;*/
         }
 
-        public override async Task<bool> ValidateAsync(string purpose, string token, UserManager<TUser> manager, TUser user)
+        public override Task<bool> ValidateAsync(string purpose, string token, UserManager<ApplicationUser> manager, ApplicationUser user)
         {
-            return IsValid(await manager.GetSecurityStampAsync(user), token);
+            return Task.FromResult(IsValid(user.GoogleAuthenticatorSecretKey, token));
+            //return IsValid(await manager.GetSecurityStampAsync(user), token);
         }
 
-        string GeneratePassword(string secret, long iterationNumber, int digits = 6)
+        /*string GeneratePassword(string secret, long iterationNumber, int digits = 6)
         {
             byte[] counter = BitConverter.GetBytes(iterationNumber);
 
@@ -95,6 +108,6 @@ namespace TradeAssist.Web.TwoFactor
         long GetCurrentCounter(DateTime now, DateTime epoch, int timeStep)
         {
             return (long)(now - epoch).TotalSeconds / timeStep;
-        }
+        }*/
     }
 }

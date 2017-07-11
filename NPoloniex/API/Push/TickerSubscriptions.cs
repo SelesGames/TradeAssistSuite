@@ -11,6 +11,8 @@ namespace NPoloniex.API.Push
         Dictionary<CurrencyPair, List<OnCurrencyTickerUpdated>> tickerSubscribers =
             new Dictionary<CurrencyPair, List<OnCurrencyTickerUpdated>>();
 
+        List<OnCurrencyTickerUpdated> rawSubscribers = new List<OnCurrencyTickerUpdated>();
+
         public void NotifySubscribers(CurrencyPair currencyPair, Tick tick)
         {
             List<OnCurrencyTickerUpdated> subscribers;
@@ -20,6 +22,12 @@ namespace NPoloniex.API.Push
                 foreach (var subscriber in subscribers)
                     subscriber(tick);
             }
+        }
+
+        public void NotifySubscribers(Tick tick)
+        {
+            foreach (var subscriber in rawSubscribers)
+                subscriber(tick);
         }
 
         public IDisposable Subscribe(CurrencyPair currencyPair, OnCurrencyTickerUpdated onTickerUpdated)
@@ -38,23 +46,28 @@ namespace NPoloniex.API.Push
 
             subscriberList.Add(onTickerUpdated);
 
-            return new SubscriptionDisposalHelper(subscriberList, onTickerUpdated);
+            return new DisposalHelper(() => subscriberList.Remove(onTickerUpdated));
         }
 
-        class SubscriptionDisposalHelper : IDisposable
+        public IDisposable Subscribe(OnCurrencyTickerUpdated onTickerUpdated)
         {
-            private List<OnCurrencyTickerUpdated> list;
-            private OnCurrencyTickerUpdated subscriptionAction;
+            rawSubscribers.Add(onTickerUpdated);
 
-            public SubscriptionDisposalHelper(List<OnCurrencyTickerUpdated> list, OnCurrencyTickerUpdated subscriptionAction)
+            return new DisposalHelper(() => rawSubscribers.Remove(onTickerUpdated));
+        }
+
+        class DisposalHelper : IDisposable
+        {
+            readonly Action onDispose;
+
+            public DisposalHelper(Action onDispose)
             {
-                this.list = list;
-                this.subscriptionAction = subscriptionAction;
+                this.onDispose = onDispose;
             }
 
             public void Dispose()
             {
-                list.Remove(subscriptionAction);
+                onDispose();
             }
         }
     }

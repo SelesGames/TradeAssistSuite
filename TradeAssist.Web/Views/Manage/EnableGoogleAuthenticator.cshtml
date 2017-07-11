@@ -4,11 +4,11 @@
 }
 <div class="row">
     <div class="col-md-8">
-        <h3>1. Add Movie Manager to Google Authenticator</h3>
-        <p>Open Google Authenticator and add Movie Manager   by scanning the QR Code to the right.</p>
+        <h3>1. Add TradeAssist to Google Authenticator</h3>
+        <p>Open Google Authenticator and add Tradeassist by scanning the QR Code to the right.</p>
         <h3>2. Enter the 6 digit code that Google  Authenticator generates</h3>
 
-        <p>Verify that Movie Manager is added correctly in Google Authenticator by entering the 6 digit code which Google Authenticator generates for Movie Manager below, and then click Enable. </p>
+        <p>Verify that TradeAssist is added correctly in Google Authenticator by entering the 6 digit code which Google Authenticator generates for TradeAssist below, and then click Enable. </p>
 
         @using (Html.BeginForm(
                 "EnableGoogleAuthenticator",
@@ -36,17 +36,22 @@
     <div class="col-md-4">
         <br /><br />
         <div id="qrcode" style="width: 200px"></div>
+        <img src="http://qrcode.kaywa.com/img.php?s=4&d=@Html.Raw(Model.BarcodeUrl)" />
+
     </div>
 </div>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="~/lib_bower/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib_bower/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib_bower/jquery-qrcode/jquery.qrcode.min.js"></script>
 
     <script>
 
         var barcodeUrl = "@Html.Raw(Model.BarcodeUrl)";
 
-        $(function () {
+       /* $(function () {
             var qrcode = new QRCode("qrcode", {
                 text: barcodeUrl,
                 width: 200,
@@ -56,7 +61,19 @@
                 correctLevel: QRCode.CorrectLevel.H
             });
             $("#Code").focus();
+        });*/
+
+        $(document).ready(function () {
+
+            $('#qrcode').qrcode({
+                'url': barcodeUrl, // users will be redirected to this URL when scanning the QR-Code
+                'width': 200, // image width in pixel        
+                'height': 200, // image height in pixel
+                'qrsize': 100 // quality of the QR-Code in pixel
+            });
+
         });
+
 
     </script>
 }

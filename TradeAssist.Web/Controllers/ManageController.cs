@@ -10,6 +10,7 @@ using TradeAssist.Web.Models;
 using TradeAssist.Web.Models.ManageViewModels;
 using TradeAssist.Web.Services;
 using TradeAssist.Web.TwoFactor;
+using static TradeAssist.Web.TwoFactor.GoogleAuthenticatorHelper;
 
 namespace TradeAssist.Web.Controllers
 {
@@ -21,19 +22,22 @@ namespace TradeAssist.Web.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
+        private readonly GoogleAuthenticatorService _googleAuthenticatorService;
 
         public ManageController(
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
         IEmailSender emailSender,
         ISmsSender smsSender,
-        ILoggerFactory loggerFactory)
+        ILoggerFactory loggerFactory,
+        GoogleAuthenticatorService googleAuthenticatorService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<ManageController>();
+            _googleAuthenticatorService = googleAuthenticatorService;
         }
 
         //
@@ -87,6 +91,11 @@ namespace TradeAssist.Web.Controllers
             return RedirectToAction(nameof(ManageLogins), new { Message = message });
         }
 
+
+
+
+        #region Phone number management
+
         //
         // GET: /Manage/AddPhoneNumber
         public IActionResult AddPhoneNumber()
@@ -113,77 +122,6 @@ namespace TradeAssist.Web.Controllers
             var code = await _userManager.GenerateChangePhoneNumberTokenAsync(user, model.PhoneNumber);
             await _smsSender.SendSmsAsync(model.PhoneNumber, "Your security code is: " + code);
             return RedirectToAction(nameof(VerifyPhoneNumber), new { PhoneNumber = model.PhoneNumber });
-        }
-
-        //
-        // POST: /Manage/EnableTwoFactorAuthentication
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EnableTwoFactorAuthentication()
-        {
-            var user = await GetCurrentUserAsync();
-            if (user != null)
-            {
-                await _userManager.SetTwoFactorEnabledAsync(user, true);
-                await _signInManager.SignInAsync(user, isPersistent: false);
-                _logger.LogInformation(1, "User enabled two-factor authentication.");
-            }
-            return RedirectToAction(nameof(Index), "Manage");
-        }
-
-        //
-        // POST: /Manage/DisableTwoFactorAuthentication
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DisableTwoFactorAuthentication()
-        {
-            var user = await GetCurrentUserAsync();
-            if (user != null)
-            {
-                await _userManager.SetTwoFactorEnabledAsync(user, false);
-                await _signInManager.SignInAsync(user, isPersistent: false);
-                _logger.LogInformation(2, "User disabled two-factor authentication.");
-            }
-            return RedirectToAction(nameof(Index), "Manage");
-        }
-
-        [HttpGet]
-        public ActionResult EnableGoogleAuthenticator()
-        {
-            //Rfc6238AuthenticationService
-            GoogleAuthenticatorService<ApplicationUser> authService = null;
-            var secretKey = authService.GenerateSecret();
-            //string userName = User.Identity.Name;
-            string issuer = "TradeAssist";
-            //string issuerEncoded = HttpUtility.UrlEncode(issuer);
-            //string barcodeUrl = KeyUrl.GetTotpUrl(secretKey, userName) + "&issuer=" + issuer;
-            //string barcodeUrl = _userManager.two
-
-            var model = new GoogleAuthenticatorViewModel
-            {
-                SecretKey = secretKey,
-                //BarcodeUrl = barcodeUrl
-            };
-
-            return View(model);
-        }
-
-        public async Task<IActionResult> DisableGoogleAuthenticator()
-        {
-            var user = await GetCurrentUserAsync();
-            if (user != null)
-            {
-                user.IsGoogleAuthenticatorEnabled = false;
-                user.GoogleAuthenticatorSecretKey = null;
-                user.TwoFactorEnabled = false;
-
-                await _userManager.UpdateAsync(user);
-
-                // same code as disable two factor auth above - not sure if needed
-                //await _userManager.SetTwoFactorEnabledAsync(user, false);
-                //await _signInManager.SignInAsync(user, isPersistent: false);
-            }
-            return RedirectToAction(nameof(Index), "Manage");
         }
 
         //
@@ -245,6 +183,118 @@ namespace TradeAssist.Web.Controllers
             return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
         }
 
+        // POST: /Manage/EnableTwoFactorAuthentication
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EnableTwoFactorAuthentication()
+        {
+            var user = await GetCurrentUserAsync();
+            if (user != null)
+            {
+                await _userManager.SetTwoFactorEnabledAsync(user, true);
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                _logger.LogInformation(1, "User enabled two-factor authentication.");
+            }
+            return RedirectToAction(nameof(Index), "Manage");
+        }
+
+        //
+        // POST: /Manage/DisableTwoFactorAuthentication
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DisableTwoFactorAuthentication()
+        {
+            var user = await GetCurrentUserAsync();
+            if (user != null)
+            {
+                await _userManager.SetTwoFactorEnabledAsync(user, false);
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                _logger.LogInformation(2, "User disabled two-factor authentication.");
+            }
+            return RedirectToAction(nameof(Index), "Manage");
+        }
+
+        #endregion
+
+
+
+
+        //GET: /Manage/EnableGoogleAuthenticator
+        [HttpGet]
+        public async Task<IActionResult> EnableGoogleAuthenticator()
+        {
+            var user = await GetCurrentUserAsync();
+
+            //Rfc6238AuthenticationService
+            var secretKey = GenerateStandardSecret();// _googleAuthenticatorService.GenerateSecret();
+            string issuer = System.Net.WebUtility.UrlEncode("TradeAssist");
+            var label = $"{issuer}:{user.UserName}";
+            var totpUrl = CreateSimpleTotpUri(label, secretKey, issuer);
+
+            var model = new GoogleAuthenticatorViewModel
+            {
+                SecretKey = secretKey,
+                BarcodeUrl = totpUrl.ToString(),
+            };
+
+            return View(model);
+        }
+
+        //GET: /Manage/EnableGoogleAuthenticator
+        [HttpPost]
+        public async Task<ActionResult> EnableGoogleAuthenticator(GoogleAuthenticatorViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (IsValid(Base32.FromBase32(model.SecretKey), model.Code))
+                //if (Rfc6238AuthenticationService.ValidateCode(Base32.FromBase32(model.SecretKey), int.Parse(model.Code)))
+                {
+
+                /*byte[] secretKey = Base32Encoder.Decode(model.SecretKey);
+
+                long timeStepMatched = 0;
+                var otp = new Totp(secretKey);
+                if (otp.VerifyTotp(model.Code.Trim(), out timeStepMatched, new VerificationWindow(2, 2)))
+                {*/
+                    var user = await GetCurrentUserAsync();
+                    user.IsGoogleAuthenticatorEnabled = true;
+                    user.GoogleAuthenticatorSecretKey = model.SecretKey;
+                    user.TwoFactorEnabled = true;
+                    await _userManager.UpdateAsync(user);
+
+                    return RedirectToAction("Index", "Manage");
+                }
+                else
+                {
+                    ModelState.AddModelError("Code", "The Code is not valid");
+                }
+            }
+
+            return View(model);
+        }
+
+        public async Task<IActionResult> DisableGoogleAuthenticator()
+        {
+            var user = await GetCurrentUserAsync();
+            if (user != null)
+            {
+                user.IsGoogleAuthenticatorEnabled = false;
+                user.GoogleAuthenticatorSecretKey = null;
+                user.TwoFactorEnabled = false;
+
+                await _userManager.UpdateAsync(user);
+
+                // same code as disable two factor auth above - not sure if needed
+                //await _userManager.SetTwoFactorEnabledAsync(user, false);
+                //await _signInManager.SignInAsync(user, isPersistent: false);
+            }
+            return RedirectToAction(nameof(Index), "Manage");
+        }
+
+
+
+
+        #region Password Management
         //
         // GET: /Manage/ChangePassword
         [HttpGet]
@@ -312,6 +362,11 @@ namespace TradeAssist.Web.Controllers
             }
             return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
         }
+
+        #endregion
+
+
+
 
         //GET: /Manage/ManageLogins
         [HttpGet]

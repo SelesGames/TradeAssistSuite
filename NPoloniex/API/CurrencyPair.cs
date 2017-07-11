@@ -1,7 +1,11 @@
-﻿namespace NPoloniex.API
+﻿using System.Globalization;
+
+namespace NPoloniex.API
 {
     public class CurrencyPair
     {
+        private static readonly CultureInfo culture = new CultureInfo("en-us");
+
         private const char SeparatorCharacter = '_';
 
         private string fullTextRep;
@@ -11,10 +15,16 @@
 
         private CurrencyPair(string stringRep)
         {
-            fullTextRep = stringRep;
+            fullTextRep = Clean(stringRep);
+
             var pairs = stringRep.Split(SeparatorCharacter);
             BaseCurrency = pairs[0];
             QuoteCurrency = pairs[1];
+
+            string Clean(string input)
+            {
+                return input.ToUpper(culture);
+            }
         }
 
         // User-defined conversion from Digit to double

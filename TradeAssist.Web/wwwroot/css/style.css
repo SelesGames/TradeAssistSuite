@@ -1,5 +1,16 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,300,500,700");
+
+
+.test{
+    background: #f8ac59;
+}
+.test2 {
+    background: #1c84c6;
+}
+.test3 {
+    background: #1dc5a3;
+}
 /*
  *
  *   INSPINIA - Responsive Admin Theme

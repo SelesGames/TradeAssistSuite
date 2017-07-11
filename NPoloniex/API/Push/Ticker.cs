@@ -16,6 +16,8 @@ namespace NPoloniex.API.Push
         TickerSubscriptions subscriptions = new TickerSubscriptions();
         BootupStatus status = BootupStatus.None;
 
+        public event EventHandler<Tick> Tick;
+
         public async Task Initialize()
         {
             if (status == BootupStatus.Initializing || status == BootupStatus.Initialized)
@@ -65,11 +67,18 @@ namespace NPoloniex.API.Push
             var key = tick.CurrencyPair;
             map[key] = tick;
             subscriptions.NotifySubscribers(key, tick);
+            subscriptions.NotifySubscribers(tick);
+            Tick?.Invoke(this, tick);
         }
 
         public IDisposable Subscribe(CurrencyPair currencyPair, OnCurrencyTickerUpdated onTickerUpdated)
         {
             return subscriptions.Subscribe(currencyPair, onTickerUpdated);
+        }
+
+        public IDisposable Subscribe(OnCurrencyTickerUpdated onTickerUpdated)
+        {
+            return subscriptions.Subscribe(onTickerUpdated);
         }
     }
 }

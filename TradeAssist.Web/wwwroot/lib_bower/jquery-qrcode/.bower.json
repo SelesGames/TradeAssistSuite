@@ -1,0 +1,14 @@
+{
+  "name": "jquery-qrcode",
+  "homepage": "https://github.com/gcusnieux/jquery-qrcode",
+  "_release": "v1.0",
+  "_resolution": {
+    "type": "tag",
+    "tag": "v1.0",
+    "commit": "cc7c586f3c60c25c1a8020f10ec7e94078f483b3"
+  },
+  "_source": "https://github.com/gcusnieux/jquery-qrcode.git",
+  "_target": "v1.0",
+  "_originalSource": "jquery-qrcode",
+  "_direct": true
+}

@@ -52,7 +52,7 @@ namespace TradeAssist.Web
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders()
-                .AddTokenProvider<GoogleAuthenticatorService<ApplicationUser>>("Google Authenticator");
+                .AddTokenProvider<GoogleAuthenticatorService>("Google");
 
             services.AddMvc();
 
@@ -94,6 +94,11 @@ namespace TradeAssist.Web
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            Task t = null;
+
+            //NPoloniex.API.Push.PoloniexWebSocketClient client = new NPoloniex.API.Push.PoloniexWebSocketClient();
+            //client.Connect();
         }
     }
 }
