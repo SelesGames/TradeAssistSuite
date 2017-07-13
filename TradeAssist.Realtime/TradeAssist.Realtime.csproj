@@ -67,8 +67,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiListener.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PriceHub.cs" />
+    <Compile Include="ServiceStartup.cs" />
     <Compile Include="TickerHub.cs" />
   </ItemGroup>
   <ItemGroup>

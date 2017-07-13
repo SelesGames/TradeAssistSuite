@@ -43,9 +43,12 @@ namespace NPoloniex.API.Http
             this.authenticator = authenticator;
         }
 
-        public async Task<T> GetData<T>(string command, string relativeUrl)
+        public async Task<T> GetData<T>(string command, string relativeUrl, string[] parameters = null)
         {
             var url = $"{BaseUrl}{relativeUrl}?command={command}";
+            if (parameters != null)
+                url = new StringBuilder(url).Append(AppendParameters(parameters)).ToString();
+
             var response = await innerClient.GetAsync(url);
             var responseObject = await DeserializeResponseJson<T>(response);
             return responseObject;
@@ -102,14 +105,13 @@ namespace NPoloniex.API.Http
             return responseObject;
         }
 
-        private static string CreateRelativeUrl(string command, object[] parameters)
+        private static string AppendParameters(string[] parameters)
         {
-            var relativeUrl = command;
             if (parameters.Length != 0) {
-                relativeUrl += "&" + string.Join("&", parameters);
+                return "?" + string.Join("&", parameters);
             }
 
-            return relativeUrl;
+            return null;
         }
     }
 

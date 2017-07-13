@@ -8,20 +8,6 @@
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
         <h2>@Model.CurrencyPair</h2>
-        <ol class="breadcrumb">
-            <li>
-                <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
-            </li>
-            <li>
-                <a>Forms</a>
-            </li>
-            <li class="active">
-                <strong>Basic Form</strong>
-            </li>
-        </ol>
-    </div>
-    <div class="col-lg-2">
-
     </div>
 </div>
 
@@ -37,12 +23,42 @@
                 </div>
 
                 <div class="ibox-content">
-                    <h5>Fibonacci retracement levels:</h5>
+
+                    <h5 class="">Realtime price</h5>
+                    <div class="row vertical-align">
+                        <div class="container-fluid">
+                            <div class="text-right">
+                                <h1 class="m-xs no-margins">0.09341238</h1>
+                            </div>
+                            <div class="font-normal">
+                                <h4 class="m-xs text-muted">BTC</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--div class="row vertical-align">
+                        <div class="container-fluid col-xs-12">
+                            <div class="font-normal text-center">
+                                <h4 class="m-xs no-padding no-margins no-borders">Realtime price</h4>
+                            </div>
+                            <div class="container-fluid pull-right no-padding">
+                                <div class="text-right">
+                                    <h1 class="m-xs">0.09341238</h1>
+                                </div>
+                                <div class="font-normal">
+                                    <h4 class="m-xs text-muted">BTC</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </!--div-->
+                    <div class="hr-line-dashed b-r"></div>
+
+                    <h5 class="">Fibonacci retracement</h5>
                     <ul class="folder-list m-b-lg m-b-md" style="padding: 0">
-                        <li>0.618 <span class="label label-primary pull-right">0.06781234</span></li>
-                        <li>0.500 <span class="label label-primary pull-right">0.03456789</span></li>
-                        <li>0.382 <span class="label label-primary pull-right">0.02453456</span></li>
-                        <li>0.236 <span class="label label-primary pull-right">0.01324245</span></li>
+                        <li>0.618 <span style="font-size: 12px" class="label label-medium label-primary pull-right">0.06781234</span></li>
+                        <li>0.500 <span class="label label-medium label-primary pull-right">0.03456789</span></li>
+                        <li>0.382 <span class="label label-medium label-primary pull-right">0.02453456</span></li>
+                        <li>0.236 <span class="label label-medium label-primary pull-right">0.01324245</span></li>
                     </ul>
                 </div>
             </div>
@@ -81,7 +97,7 @@
                         </div>
 
 
-                        <div class="hr-line-dashed"></div>
+                        <div class="hr-line-dashed b-r"></div>
                         <div class="form-group">
                             <div class="container-fluid col-xs-12">
                                 <div class="pull-right">
@@ -97,7 +113,7 @@
 
             
     </div><!--end row-->
-
+</div>
 
 
                 <!--div class="row">

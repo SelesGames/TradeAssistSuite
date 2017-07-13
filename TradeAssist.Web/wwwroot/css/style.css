@@ -1100,6 +1100,9 @@ button.dim:active:before {
   padding-right: 6px;
   text-shadow: none;
 }
+.label-medium {
+    font-size: 12px;
+}
 .label-primary,
 .badge-primary {
   background-color: #1ab394;
