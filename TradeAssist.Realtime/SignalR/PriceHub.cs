@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
+using NPoloniex.API;
 using NPoloniex.API.Http;
+using NPoloniex.API.Push;
 using Owin;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,19 @@ using System.Threading.Tasks;
 
 namespace TradeAssist.Realtime
 {
+    class VolumeWeightedPrice
+    {
+        CurrencyPair currencyPair;
+        Tick lastPoloniexTick;
+        Tick lastBittrexTick;
+
+        // Accomodate a price change
+        public void Recalculate(Tick tick)
+        {
+
+        }
+    }
+
     public class HistoricChartDataCollection
     {
         public static HistoricChartDataCollection Current { get; } = new HistoricChartDataCollection();

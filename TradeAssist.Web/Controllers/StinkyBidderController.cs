@@ -12,6 +12,8 @@ using TradeAssist.Web.Services;
 using TradeAssist.Web.TwoFactor;
 using static TradeAssist.Web.TwoFactor.GoogleAuthenticatorHelper;
 using TradeAssist.Web.Models.StinkyBidderViewModels;
+using Microsoft.Azure.EventHubs;
+using System.Text;
 
 namespace TradeAssist.Web.Controllers
 {
@@ -69,19 +71,21 @@ namespace TradeAssist.Web.Controllers
         {
             var user = await GetCurrentUserAsync();
 
-            //Rfc6238AuthenticationService
-            var secretKey = GenerateStandardSecret();// _googleAuthenticatorService.GenerateSecret();
-            string issuer = System.Net.WebUtility.UrlEncode("TradeAssist");
-            var label = $"{issuer}:{user.UserName}";
-            var totpUrl = CreateSimpleTotpUri(label, secretKey, issuer);
+            var orderId = Guid.NewGuid();
 
-            var model = new GoogleAuthenticatorViewModel
+            var order = new
             {
-                SecretKey = secretKey,
-                BarcodeUrl = totpUrl.ToString(),
+                OrderId = orderId,
+                UserId = user.Id,
+                CurrencyPair = vm.CurrencyPair,
+                Price = vm.Price,
+                Amount = vm.AmountInBtc,
+                IsSilent = vm.IsSilent,
             };
 
-            return View(model);
+            await EventHubRouter.Current.SendAsJson(order);
+
+            return RedirectToAction("Index");
         }
 
         private Task<ApplicationUser> GetCurrentUserAsync()

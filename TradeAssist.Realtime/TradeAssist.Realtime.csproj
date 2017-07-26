@@ -67,18 +67,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApiListener.cs" />
+    <Compile Include="PriceChange.cs" />
+    <Compile Include="PriceInfo.cs" />
+    <Compile Include="PriceTracker.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PriceHub.cs" />
+    <Compile Include="SignalR\PriceHub.cs" />
     <Compile Include="ServiceStartup.cs" />
-    <Compile Include="TickerHub.cs" />
+    <Compile Include="SignalR\TickerHub.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NBittrex\NBittrex.csproj">
+      <Project>{b45a59a3-82f2-4698-81ff-d6d4d63bfbea}</Project>
+      <Name>NBittrex</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NPoloniex\NPoloniex.csproj">
       <Project>{2bdefdc6-e211-453f-b160-a2f9b3f83ec5}</Project>
       <Name>NPoloniex</Name>

@@ -21,7 +21,20 @@ namespace TradeAssist.Realtime.ConsoleTestConsumer
 
             client.Initialize(currencyPair).Wait();
 
-            Console.ReadLine();
+            while (true)
+            {
+                var input = Console.ReadLine();
+                var tokens = input?.Split(' ').ToList();
+
+                if (tokens.First() == "p")
+                    client.PrintPrice(tokens.Skip(1).First()).Wait();
+
+                else if (tokens.First() == "s")
+                    client.Subscribe(tokens.Skip(1).First()).Wait();
+
+                else if (tokens.First() == "u")
+                    client.Unsubscribe(tokens.Skip(1).First()).Wait();
+            }
         }
     }
 
@@ -52,13 +65,27 @@ namespace TradeAssist.Realtime.ConsoleTestConsumer
                 if (!connected)
                     await Task.Delay(retryIntervalInMilliseconds);
             }
-
-            await hubProxy.Invoke("subscribe", currencyPair);
         }
 
         void OnData(dynamic d)
         {
             Console.WriteLine(d);
+        }
+
+        public async Task Subscribe(string currencyPair)
+        {
+            await hubProxy.Invoke("subscribe", currencyPair);
+        }
+
+        public async Task Unsubscribe(string currencyPair)
+        {
+            await hubProxy.Invoke("unsubscribe", currencyPair);
+        }
+
+        public async Task PrintPrice(string currencyPair)
+        {
+            var price = await hubProxy.Invoke<dynamic>("last", currencyPair);
+            Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(price));
         }
     }
 }

@@ -23,13 +23,13 @@ namespace NBittrex
           "Created": "2017-04-30T18:41:22.823"
         },*/
 
-    class Payload
+    public class Payload
     {
         public long Nounce { get; set; }
         public List<Delta> Deltas { get; set; }
     }
 
-    class Delta
+    public class Delta
     {
         public string MarketName { get; set; }
         public decimal High { get; set; }
@@ -42,7 +42,7 @@ namespace NBittrex
         public decimal PrevDay { get; set; }
     }
 
-    class observer : IObserver<string>
+   /* class observer : IObserver<string>
     {
         public void OnCompleted()
         {
@@ -58,12 +58,14 @@ namespace NBittrex
         {
             Console.WriteLine(value);
         }
-    }
+    }*/
 
     public class BittrexHub
     {
         string BittrexConnectionString = "https://socket.bittrex.com/signalr";
         IHubProxy hubProxy;
+
+        public event EventHandler<Payload> OnPayloadTick;
 
         public async Task Initialize()
         {
@@ -96,14 +98,18 @@ namespace NBittrex
 
         void OnPayload(Payload p)
         {
-            var relevantOne = p.Deltas.SingleOrDefault(o => o.MarketName == "BTC-XRP");
+            if (p != null)
+            {
+                OnPayloadTick?.Invoke(this, p);
+            }
+            /*var relevantOne = p.Deltas.SingleOrDefault(o => o.MarketName == "BTC-XRP");
 
             if (relevantOne != null)
             {
                 var output = Newtonsoft.Json.JsonConvert.SerializeObject(relevantOne);
 
                 Console.WriteLine(output);
-            }
+            }*/
         }      
     }
 }

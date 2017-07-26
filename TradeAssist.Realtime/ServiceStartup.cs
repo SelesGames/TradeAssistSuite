@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace TradeAssist.Realtime
 {
+    /// <summary>
+    /// Entry point for the startup of the entire Service
+    /// </summary>
     public class ServiceStartup : IOnPriceChangeAction, IDisposable
     {
         IHubContext hubContext;
@@ -16,7 +19,7 @@ namespace TradeAssist.Realtime
         {
             try
             {
-                singalRStartupDisposeHandle = WebApp.Start<Startup>(address);
+                singalRStartupDisposeHandle = WebApp.Start<WebAppStartup>(address);
                 Console.WriteLine("Server running");
 
                 var dependencyResolver = GlobalHost.DependencyResolver;
@@ -33,7 +36,7 @@ namespace TradeAssist.Realtime
             if (isDisposed)
                 return;
 
-            var apiListener = new ApiListener();
+            var apiListener = PriceTracker.Current;
             apiListener.OnPriceChangeAction = this;
 
             await apiListener.Initialize();
@@ -42,16 +45,15 @@ namespace TradeAssist.Realtime
         public void OnPriceChange(PriceChange pc)
         {
             var targets = hubContext?.Clients.Group(pc.CurrencyPair);
-            var output = new
-            {
-                currencyPair = pc.CurrencyPair.ToString(),
-                last = pc.AveragedLastPrice
-            };
+            var output = new object[] { pc.CurrencyPair, pc.VolumeWeightedPrice, pc.Exchange, pc.ExchangePrice };
             targets.onTick(output);
         }
 
         public void Dispose()
         {
+            if (isDisposed)
+                return;
+
             isDisposed = true;
             singalRStartupDisposeHandle?.Dispose();
         }
