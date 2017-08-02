@@ -8,14 +8,13 @@ namespace TradeAssist.Web
 {
     public class EventHubRouter
     {
-        public static EventHubRouter Current = new EventHubRouter();
+        public static EventHubRouter Current { get; } = new EventHubRouter();
+        private EventHubRouter() { }
 
         string connectionString;
         string eventHubName;
         EventHubClient client;
         JsonReadWriter jsonRW = new JsonReadWriter();
-
-        private EventHubRouter() { }
 
         public void Initialize(string connectionString, string eventHubName)
         {

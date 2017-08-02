@@ -14,9 +14,9 @@ namespace TradeAssist.Realtime
 {
     class VolumeWeightedPrice
     {
-        CurrencyPair currencyPair;
+        /*CurrencyPair currencyPair;
         Tick lastPoloniexTick;
-        Tick lastBittrexTick;
+        Tick lastBittrexTick;*/
 
         // Accomodate a price change
         public void Recalculate(Tick tick)

@@ -34,7 +34,7 @@ namespace TradeAssist.Realtime
         {
             var canonical = Canonical(currencyPair);
 
-            var last = PriceTracker.Current.Get(canonical);
+            var last = PriceTracker.Current.GetPriceInfo(canonical);
             if (last != null)
             {
                 return new
@@ -54,6 +54,11 @@ namespace TradeAssist.Realtime
             {
                 return new { error = "not found" };
             }
+        }
+
+        public object Markets(string exchange = null)
+        {
+            return PriceTracker.Current.GetMarkets(exchange);
         }
     }
 

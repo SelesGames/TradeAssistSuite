@@ -1,19 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using TradeAssist.Web.Models;
-using TradeAssist.Web.Models.ManageViewModels;
-using TradeAssist.Web.Services;
-using TradeAssist.Web.TwoFactor;
-using static TradeAssist.Web.TwoFactor.GoogleAuthenticatorHelper;
 using TradeAssist.Web.Models.StinkyBidderViewModels;
-using Microsoft.Azure.EventHubs;
-using System.Text;
+using TradeAssist.Web.Services;
 
 namespace TradeAssist.Web.Controllers
 {
@@ -40,9 +34,22 @@ namespace TradeAssist.Web.Controllers
             _logger = loggerFactory.CreateLogger<StinkyBidderController>();
         }
 
-        public Task<IActionResult> Index()
+        //GET: /StinkyBidder
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
-            return OrderEntry("BTC_ETH");
+            var listOfMarkets = await TARClient.Current.Markets();
+            var vm = new IndexViewModel();
+            vm.Markets.AddRange(listOfMarkets);
+
+            return View(vm);
+        }
+
+        //POST: /StinkyBidder
+        [HttpPost]
+        public IActionResult Index(IndexViewModel vm)
+        {
+            return RedirectToAction("OrderEntry", "StinkyBidder", routeValues: new { currencyPair = vm.SelectedMarket });
         }
 
         //GET: /StinkyBidder/OrderEntry
@@ -55,7 +62,7 @@ namespace TradeAssist.Web.Controllers
             var model = new OrderEntryViewModel
             {
                 CurrencyPair = currencyPair,
-                AmountInBtc = 0.00000000m,
+                AmountInBtc = 0.0m,
                 IsSilent = false,
                 Price = 0.00000000m,
                 AveragePriceAcrossExchanges = 0.03450284m,

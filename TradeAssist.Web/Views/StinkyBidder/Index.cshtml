@@ -1,0 +1,70 @@
+﻿@model TradeAssist.Web.Models.StinkyBidderViewModels.IndexViewModel
+
+@{
+    ViewData["Title"] = "Place a Stinkbid";
+}
+
+<!-- Top-level header with name of currencypair -->
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Pick a currency pair - any currency pair</h2>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+
+        <!--   CURRENCY PAIR SELECTOR    -->
+        <!--*****************************************************************-->
+        <div class="col-lg-6 col-xs-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Select a currency pair to place a Stink Bid on</h5>
+                </div>
+
+                <div class="ibox-content">
+                    <form method="post" action="Index" class="form-horizontal">
+                        <!-- Hidden bindings -->
+
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">Currency Pair</label>
+                            <div class="col-xs-9">
+                                <select type="text" class="form-control" asp-for="SelectedMarket" asp-items="@(new SelectList(@Model.Markets))"></select>
+                            </div>
+                        </div>
+
+
+                        <div class="hr-line-dashed b-r"></div>
+                        <div class="form-group">
+                            <div class="container-fluid col-xs-12">
+                                <div class="pull-right">
+                                    <button class="btn btn-primary" asp-action="Index" type="submit">Continue</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+            
+    </div><!--end row-->
+</div>
+
+
+<script src="~/lib_bower/switchery/switchery.js"></script>
+
+
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <link rel="stylesheet" href="~/lib/switchery/switchery.css" />
+
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var elem = document.querySelector('.js-switch');
+        var switchery = new Switchery(elem, { color: '#1AB394' });
+    });
+</script>

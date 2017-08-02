@@ -75,23 +75,28 @@
                 </div>
 
                 <div class="ibox-content">
-                    <form method="get" class="form-horizontal">
+                    <form method="post" action="OrderEntry" class="form-horizontal">
+                        <!-- Hidden bindings -->
+                        <input asp-for="CurrencyPair" type="hidden" />.
+
                         <div class="form-group">
                             <label class="col-xs-3 control-label">Amount (BTC)</label>
-                            <div class="col-xs-9"><input type="text" class="form-control"></div>
+                            <div class="col-xs-9">
+                                <input type="text" class="form-control" asp-for="AmountInBtc">
+                            </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-xs-3 control-label">Price</label>
                             <div class="col-xs-9">
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" asp-for=@Model.Price>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-xs-3 control-label">Silent Bid</label>
                             <div class="col-xs-9">
-                                <input type="checkbox" class="js-switch center-orientation aligncenter" />
+                                <input type="checkbox" class="js-switch center-orientation aligncenter" asp-for=@Model.IsSilent />
                                 <span class="help-block m-b-none">A silent bid will not be placed onto the exchange until after it reaches your target price.  By default, this is off, and your order will be placed once it reaches "close" to your target price.</span>
                             </div>
                         </div>
@@ -102,7 +107,7 @@
                             <div class="container-fluid col-xs-12">
                                 <div class="pull-right">
                                     <button class="btn btn-danger" type="submit">Cancel</button>
-                                    <button class="btn btn-primary" type="submit">Submit Stinkbid</button>
+                                    <button class="btn btn-primary" asp-action="OrderEntry" type="submit">Submit Stinkbid</button>
                                 </div>
                             </div>
                         </div>

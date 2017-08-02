@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.12
+VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradeAssist.Web", "TradeAssist.Web\TradeAssist.Web.csproj", "{505E88D1-FA1E-4DDE-92F3-49BEA281E24F}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -10,13 +10,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradeAssist.Web", "TradeAss
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPoloniex", "NPoloniex\NPoloniex.csproj", "{2BDEFDC6-E211-453F-B160-A2F9B3F83EC5}"
 EndProject
-Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "TradeAssist.Realtime.SFAConsoleAppContainer", "TradeAssist.Realtime.SFAConsoleAppContainer\TradeAssist.Realtime.SFAConsoleAppContainer.sfproj", "{38CD9D67-859F-41CB-8FD3-0FCC1087FFCD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeAssist.Realtime", "TradeAssist.Realtime\TradeAssist.Realtime.csproj", "{F47C4A51-CF71-4EEA-AC2E-6BF6DD5495E2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeAssist.Realtime.ConsoleTestConsumer", "TradeAssist.Realtime.ConsoleTestConsumer\TradeAssist.Realtime.ConsoleTestConsumer.csproj", "{43888AEE-5139-45A5-B736-452F5EE9E88B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NBittrex", "NBittrex\NBittrex.csproj", "{B45A59A3-82F2-4698-81FF-D6D4D63BFBEA}"
+EndProject
+Project("{A07B5EB6-E848-4116-A8D0-A826331D98C6}") = "TradeAssist.Realtime.ServiceFabric", "TradeAssist.Realtime.ServiceFabric\TradeAssist.Realtime.ServiceFabric.sfproj", "{8B1D4F04-375E-4AB0-A55D-2E0244B5F64D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeAssist.Realtime.SFService", "TradeAssist.Realtime.SFService\TradeAssist.Realtime.SFService.csproj", "{70236A09-0B72-41CE-87AA-37175E17873B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,14 +44,6 @@ Global
 		{2BDEFDC6-E211-453F-B160-A2F9B3F83EC5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2BDEFDC6-E211-453F-B160-A2F9B3F83EC5}.Release|x64.ActiveCfg = Release|Any CPU
 		{2BDEFDC6-E211-453F-B160-A2F9B3F83EC5}.Release|x64.Build.0 = Release|Any CPU
-		{38CD9D67-859F-41CB-8FD3-0FCC1087FFCD}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{38CD9D67-859F-41CB-8FD3-0FCC1087FFCD}.Debug|x64.ActiveCfg = Debug|x64
-		{38CD9D67-859F-41CB-8FD3-0FCC1087FFCD}.Debug|x64.Build.0 = Debug|x64
-		{38CD9D67-859F-41CB-8FD3-0FCC1087FFCD}.Debug|x64.Deploy.0 = Debug|x64
-		{38CD9D67-859F-41CB-8FD3-0FCC1087FFCD}.Release|Any CPU.ActiveCfg = Release|x64
-		{38CD9D67-859F-41CB-8FD3-0FCC1087FFCD}.Release|x64.ActiveCfg = Release|x64
-		{38CD9D67-859F-41CB-8FD3-0FCC1087FFCD}.Release|x64.Build.0 = Release|x64
-		{38CD9D67-859F-41CB-8FD3-0FCC1087FFCD}.Release|x64.Deploy.0 = Release|x64
 		{F47C4A51-CF71-4EEA-AC2E-6BF6DD5495E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F47C4A51-CF71-4EEA-AC2E-6BF6DD5495E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F47C4A51-CF71-4EEA-AC2E-6BF6DD5495E2}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -74,6 +68,20 @@ Global
 		{B45A59A3-82F2-4698-81FF-D6D4D63BFBEA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B45A59A3-82F2-4698-81FF-D6D4D63BFBEA}.Release|x64.ActiveCfg = Release|Any CPU
 		{B45A59A3-82F2-4698-81FF-D6D4D63BFBEA}.Release|x64.Build.0 = Release|Any CPU
+		{8B1D4F04-375E-4AB0-A55D-2E0244B5F64D}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{8B1D4F04-375E-4AB0-A55D-2E0244B5F64D}.Debug|x64.ActiveCfg = Debug|x64
+		{8B1D4F04-375E-4AB0-A55D-2E0244B5F64D}.Debug|x64.Build.0 = Debug|x64
+		{8B1D4F04-375E-4AB0-A55D-2E0244B5F64D}.Debug|x64.Deploy.0 = Debug|x64
+		{8B1D4F04-375E-4AB0-A55D-2E0244B5F64D}.Release|Any CPU.ActiveCfg = Release|x64
+		{8B1D4F04-375E-4AB0-A55D-2E0244B5F64D}.Release|x64.ActiveCfg = Release|x64
+		{8B1D4F04-375E-4AB0-A55D-2E0244B5F64D}.Release|x64.Build.0 = Release|x64
+		{8B1D4F04-375E-4AB0-A55D-2E0244B5F64D}.Release|x64.Deploy.0 = Release|x64
+		{70236A09-0B72-41CE-87AA-37175E17873B}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{70236A09-0B72-41CE-87AA-37175E17873B}.Debug|x64.ActiveCfg = Debug|x64
+		{70236A09-0B72-41CE-87AA-37175E17873B}.Debug|x64.Build.0 = Debug|x64
+		{70236A09-0B72-41CE-87AA-37175E17873B}.Release|Any CPU.ActiveCfg = Release|x64
+		{70236A09-0B72-41CE-87AA-37175E17873B}.Release|x64.ActiveCfg = Release|x64
+		{70236A09-0B72-41CE-87AA-37175E17873B}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

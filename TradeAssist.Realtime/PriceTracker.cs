@@ -1,7 +1,9 @@
 ﻿using NPoloniex.API.Http;
 using NPoloniex.API.Push;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 using static TradeAssist.Realtime.Constants;
 
@@ -47,6 +49,11 @@ namespace TradeAssist.Realtime
                 Canonical(input, BittrexSeparator) ??
                 Canonical(input, PoloniexSeparator);
         }
+
+        public static List<string> Exchanges()
+        {
+            return new List<string> { Bittrex, Poloniex };
+        }
     }
 
     internal interface IOnPriceChangeAction
@@ -67,7 +74,10 @@ namespace TradeAssist.Realtime
         public async Task Initialize()
         {
             await InitializePoloniex();
+            Console.WriteLine("poloniex initialized");
+
             await InitializeBittrex();
+            Console.WriteLine("bittrex initialized");
 
             async Task InitializeBittrex()
             {
@@ -143,12 +153,28 @@ namespace TradeAssist.Realtime
             OnPriceChangeAction?.OnPriceChange(priceChange);
         }
 
-        public PriceInfo Get(string currencyPair, bool requiresCleanup = false)
+        public PriceInfo GetPriceInfo(string currencyPair, bool requiresCleanup = false)
         {
             if (requiresCleanup)
                 currencyPair = Canonical(currencyPair);
 
             return priceInfoLookup.TryGetValue(currencyPair, out var val) ? val : null;
+        }
+
+        public List<string> GetMarkets(string exchange = null)
+        {
+            exchange = exchange?.ToLowerInvariant();
+            if (!Exchanges().Contains(exchange))
+                exchange = null;
+
+            var markets = priceInfoLookup
+                .SelectMany(a => a.Value.Prices
+                    .Select(b => new { exchange = b.Key, currencyPair = a.Key }));
+
+            if (exchange != null)
+                markets = markets.Where(o => o.exchange == exchange);
+
+            return markets.Select(o => o.currencyPair).Distinct().OrderBy(o => o).ToList();
         }
     }
 }

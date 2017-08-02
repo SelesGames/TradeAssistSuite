@@ -77,7 +77,7 @@ namespace NBittrex
 
             //stockTickerHubProxy.On("SubscribeToExchangeDeltas", dynamic d => OnData()
 
-            await hubConnection.Start();
+            await hubConnection.Start();       
         }
 
         public async Task SubscribeToTicker(string tickerPair)
