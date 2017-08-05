@@ -9,7 +9,7 @@ namespace NPoloniex.API.Http
     {
         const string ApiUrlHttpsRelativeTrading = "public";
 
-        ApiHttpClient ApiHttpClient { get; set; }
+        ApiHttpClient ApiHttpClient { get; }
 
         internal Public(ApiHttpClient apiHttpClient)
         {

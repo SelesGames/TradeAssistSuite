@@ -10,7 +10,7 @@ namespace NPoloniex.API.Http
     {
         const string ApiUrlHttpsRelativeTrading = "tradingApi";
 
-        ApiHttpClient ApiHttpClient { get; set; }
+        ApiHttpClient ApiHttpClient { get; }
 
         internal Trading(ApiHttpClient apiHttpClient)
         {
