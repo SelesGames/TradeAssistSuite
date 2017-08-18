@@ -60,5 +60,28 @@ namespace TradeAssist.Realtime.Candlestick
                 default: throw new Exception($"unrecognized CandlestickSize: {size}");
             }
         }
+
+        public static string GetDisplayLabel(this CandlestickSize size)
+        {
+            switch (size)
+            {
+                case _1Minute:      return "1 minute";
+                case _3Minutes:     return "3 minutes";
+                case _5Minutes:     return "5 minutes";
+                case _15Minutes:    return "15 minutes";
+                case _30Minutes:    return "30 minutes";
+                case _1Hour:        return "1 hour";
+                case _2Hours:       return "2 hours";
+                case _4Hours:       return "4 hours";
+                case _12Hours:      return "12 hours";
+                case _1Day:         return "1 day";
+                case _3Days:        return "3 days";
+                case _1Week:        return "1 week";
+                case _1Month:       return "1 month";
+                case _3Months:      return "3 months";
+
+                default: throw new Exception($"unrecognized CandlestickSize: {size}");
+            }
+        }
     }
 }

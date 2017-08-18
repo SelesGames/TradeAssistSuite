@@ -2,8 +2,8 @@
 using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.Owin.Hosting;
 using System;
-using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace TradeAssist.Realtime.Candlestick
 {
@@ -37,10 +37,14 @@ namespace TradeAssist.Realtime.Candlestick
             if (isDisposed)
                 return;
 
+            // begin trade monitor, which will extract candles from trades
             var candleTracker = CandlestickTracker.Current;
-            candleTracker.OnCandlesticksAction = this;
-
             await candleTracker.Initialize();
+
+            // begin timer, which will take snapshots of candles and emit them via signalr
+            var emitter = new CandleEmitter(this);
+            var timer = new Timer(emitter);
+            timer.InitTimer();
         }
 
         public void Dispose()

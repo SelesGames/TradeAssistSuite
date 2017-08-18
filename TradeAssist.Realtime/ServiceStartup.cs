@@ -3,15 +3,17 @@ using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.Owin.Hosting;
 using System;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace TradeAssist.Realtime
 {
     /// <summary>
     /// Entry point for the startup of the entire Service
     /// </summary>
-    public class ServiceStartup : IOnPriceChangeAction, IDisposable
+    public class ServiceStartup : IOnPriceChangeAction, IOnCandlesticksAction, IDisposable
     {
         IHubContext hubContext;
+        IHubContext candleHubContext;
         IDisposable singalRStartupDisposeHandle;
         bool isDisposed;
 
@@ -25,6 +27,7 @@ namespace TradeAssist.Realtime
                 var dependencyResolver = GlobalHost.DependencyResolver;
                 var connectionManager = dependencyResolver.Resolve<IConnectionManager>();
                 hubContext = connectionManager.GetHubContext<TickerHub>();
+                candleHubContext = connectionManager.GetHubContext<CandleHub>();
             }
             catch (Exception ex)
             {
@@ -36,10 +39,15 @@ namespace TradeAssist.Realtime
             if (isDisposed)
                 return;
 
-            var apiListener = PriceTracker.Current;
-            apiListener.OnPriceChangeAction = this;
+            var priceTracker = PriceTracker.Current;
+            priceTracker.OnPriceChangeAction = this;
 
-            await apiListener.Initialize();
+            await priceTracker.Initialize();
+
+            var candleTracker = CandlestickTracker.Current;
+            candleTracker.OnCandlesticksAction = this;
+
+            await candleTracker.Initialize();
         }
 
         public void OnPriceChange(PriceChange pc)
@@ -56,6 +64,12 @@ namespace TradeAssist.Realtime
 
             isDisposed = true;
             singalRStartupDisposeHandle?.Dispose();
+        }
+
+        public void OnCandlesticks(List<Candle> pc)
+        {
+            var targets = hubContext?.Clients.Group("oneMinute");
+            targets.onTick(pc);
         }
     }
 }

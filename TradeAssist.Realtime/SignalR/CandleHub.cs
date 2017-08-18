@@ -9,8 +9,8 @@ namespace TradeAssist.Realtime
     /// <summary>
     /// Simple SignalR hub that provides Pub/Sub for ticker pairs, as well as retrieval of last price
     /// </summary>
-    [HubName("ticker")]
-    public class TickerHub : Hub
+    [HubName("candle")]
+    public class CandleHub : Hub
     {
         public void Subscribe(string currencyPair)
         {
@@ -18,7 +18,7 @@ namespace TradeAssist.Realtime
             if (groupName == null)
                 return;
 
-            Groups.Add(Context.ConnectionId, groupName);
+            Groups.Add(Context.ConnectionId, "oneMinute");
         }
 
         public void Unsubscribe(string currencyPair)
@@ -27,9 +27,9 @@ namespace TradeAssist.Realtime
             if (groupName == null)
                 return;
 
-            Groups.Remove(Context.ConnectionId, groupName);
+            Groups.Remove(Context.ConnectionId, "oneMinute");
         }
-
+        /*
         public object Last(string currencyPair)
         {
             var canonical = Canonical(currencyPair);
@@ -59,6 +59,6 @@ namespace TradeAssist.Realtime
         public object Markets(string exchange = null)
         {
             return PriceTracker.Current.GetMarkets(exchange);
-        }
+        }*/
     }
 }

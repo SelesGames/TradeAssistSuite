@@ -15,7 +15,8 @@ namespace TradeAssist.Suite
         {
             var bittrexHub = new NBittrex.BittrexHub();
             bittrexHub.Initialize().Wait();
-            bittrexHub.SubscribeToTicker("BTC-ANT").Wait();
+            bittrexHub.SubscribeToTicker("BTC-ANS").Wait();
+            //bittrexHub.SubscribeToFlood().Wait();
             Console.ReadLine();
 
             return;

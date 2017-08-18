@@ -30,25 +30,33 @@ namespace TradeAssist.Realtime.ConsoleTestConsumer
 
                 else if (tokens.First() == "m")
                     client.Markets().Wait();
+
+                else if (tokens.First() == "sc")
+                    client.SubscribeCandles().Wait();
             }
         }
     }
 
     public class TARClient
     {
+        string ConnectionString = "http://localhost:1943";
         //string ConnectionString = "http://cba0978522d7:1942";
         //string ConnectionString = "http://tradeassistrealtime.azurewebsites.net:1942";
-        string ConnectionString = "http://tradeassistrealtime.azurewebsites.net/api/continuouswebjobs/tradeassist-realtime:1942";
+        //string ConnectionString = "http://tradeassistrealtime.azurewebsites.net/api/continuouswebjobs/tradeassist-realtime:1942";
 
-        IHubProxy hubProxy;
+        IHubProxy tickerHubProxy;
+        IHubProxy candleHubProxy;
 
         readonly int retryIntervalInMilliseconds = 1000;
 
         public async Task Initialize()
         {
             var hubConnection = new HubConnection(ConnectionString);
-            hubProxy = hubConnection.CreateHubProxy("ticker");
-            hubProxy.On("onTick", OnData);
+            //tickerHubProxy = hubConnection.CreateHubProxy("ticker");
+            //tickerHubProxy.On("onTick", OnData);
+
+            candleHubProxy = hubConnection.CreateHubProxy("candle");
+            candleHubProxy.On("onTick", OnData);
 
             bool connected = false;
 
@@ -74,24 +82,29 @@ namespace TradeAssist.Realtime.ConsoleTestConsumer
 
         public async Task Subscribe(string currencyPair)
         {
-            await hubProxy.Invoke("subscribe", currencyPair);
+            await tickerHubProxy.Invoke("subscribe", currencyPair);
         }
 
         public async Task Unsubscribe(string currencyPair)
         {
-            await hubProxy.Invoke("unsubscribe", currencyPair);
+            await tickerHubProxy.Invoke("unsubscribe", currencyPair);
         }
 
         public async Task PrintPrice(string currencyPair)
         {
-            var price = await hubProxy.Invoke<dynamic>("last", currencyPair);
+            var price = await tickerHubProxy.Invoke<dynamic>("last", currencyPair);
             Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(price));
         }
 
         public async Task Markets(string exchange = null)
         {
-            var markets = await hubProxy.Invoke<List<string>>("markets", exchange);
+            var markets = await tickerHubProxy.Invoke<List<string>>("markets", exchange);
             Console.WriteLine(markets.Count);
+        }
+
+        public async Task SubscribeCandles()
+        {
+            await candleHubProxy.Invoke("subscribe", "x");
         }
     }
 }

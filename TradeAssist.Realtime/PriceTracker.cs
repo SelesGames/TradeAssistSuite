@@ -9,7 +9,7 @@ using static TradeAssist.Realtime.Constants;
 
 namespace TradeAssist.Realtime
 {
-    internal static class Constants
+    /*internal static class Constants
     {
         public static readonly string Poloniex = "poloniex";
         public static readonly string Bittrex = "bittrex";
@@ -54,7 +54,7 @@ namespace TradeAssist.Realtime
         {
             return new List<string> { Bittrex, Poloniex };
         }
-    }
+    }*/
 
     internal interface IOnPriceChangeAction
     {
@@ -82,7 +82,7 @@ namespace TradeAssist.Realtime
             async Task InitializeBittrex()
             {
                 var bittrexHub = new NBittrex.BittrexHub();
-                bittrexHub.OnPayloadTick += (_, tick) =>
+                bittrexHub.OnUpdateSummaryStateTick += (_, tick) =>
                     {
                         if (tick == null || tick.Deltas == null)
                             return;

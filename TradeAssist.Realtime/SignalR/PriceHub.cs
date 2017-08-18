@@ -41,7 +41,7 @@ namespace TradeAssist.Realtime
             {
                 var client = new ApiHttpClient();
                 var oneYearAgo = DateTime.UtcNow - new TimeSpan(TimeSpan.TicksPerDay * 365);
-                var chartData = await client.Public.GetChartData(market, CandlestickSize.Day, oneYearAgo, DateTime.UtcNow);
+                var chartData = await client.Public.GetChartData(market, NPoloniex.API.Http.CandlestickSize.Day, oneYearAgo, DateTime.UtcNow);
                 var yearHigh = chartData.Max(o => o.High);
                 var yearLow = chartData.Min(o => o.Low);
                 var historicData = new HistoricChartData(market, yearHigh, yearLow);
