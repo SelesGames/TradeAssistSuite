@@ -79,18 +79,15 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PriceChange.cs" />
     <Compile Include="PriceInfo.cs" />
-    <Compile Include="CandlestickTracker.cs" />
     <Compile Include="PriceTracker.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SignalR\PriceHub.cs" />
     <Compile Include="ServiceStartup.cs" />
-    <Compile Include="SignalR\CandleHub.cs" />
     <Compile Include="SignalR\TickerHub.cs" />
   </ItemGroup>
   <ItemGroup>

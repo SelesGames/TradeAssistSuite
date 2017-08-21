@@ -1,19 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.12
+VisualStudioVersion = 15.0.26730.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeAssistSuite", "TradeAssistSuite\TradeAssistSuite.csproj", "{B2018FCA-AE99-4046-AD4F-D82E720452FD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoloniexApi.Net", "PoloniexApi.Net\PoloniexApi.Net\PoloniexApi.Net.csproj", "{BC5546FA-4F27-4A57-ABE0-2691D1E8B51C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPoloniex", "NPoloniex\NPoloniex.csproj", "{2BDEFDC6-E211-453F-B160-A2F9B3F83EC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NPoloniex", "NPoloniex\NPoloniex.csproj", "{2BDEFDC6-E211-453F-B160-A2F9B3F83EC5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeAssist.DocumentStorage", "TradeAssist.DocumentStorage\TradeAssist.DocumentStorage.csproj", "{A9CDF953-F469-409B-9A76-207E3B4AEF33}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "TradeAssist.Common", "TradeAssist.Common\TradeAssist.Common.shproj", "{B4F33FDC-2A43-48D5-9854-0E3838B62A98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NBittrex", "NBittrex\NBittrex.csproj", "{B45A59A3-82F2-4698-81FF-D6D4D63BFBEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NBittrex", "NBittrex\NBittrex.csproj", "{B45A59A3-82F2-4698-81FF-D6D4D63BFBEA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradeGuard.Logic", "TradeGuard.Logic\TradeGuard.Logic.csproj", "{2B244FB2-7F45-4E6F-BAFA-18A2BF8C6C8E}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -46,8 +48,15 @@ Global
 		{B45A59A3-82F2-4698-81FF-D6D4D63BFBEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B45A59A3-82F2-4698-81FF-D6D4D63BFBEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B45A59A3-82F2-4698-81FF-D6D4D63BFBEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B244FB2-7F45-4E6F-BAFA-18A2BF8C6C8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B244FB2-7F45-4E6F-BAFA-18A2BF8C6C8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B244FB2-7F45-4E6F-BAFA-18A2BF8C6C8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B244FB2-7F45-4E6F-BAFA-18A2BF8C6C8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B842D663-7589-4DC8-9D63-146C7F97219B}
 	EndGlobalSection
 EndGlobal
