@@ -15,9 +15,9 @@ namespace NBittrex.API.Http
             ApiHttpClient = apiHttpClient;
         }
 
-        public Task<BittrexResult<List<MarketData>>> GetMarkets()
+        public Task<ApiCallResponse<List<MarketData>>> GetMarkets()
         {
-            return ApiHttpClient.GetData<BittrexResult<List<MarketData>>>("getMarkets", ApiUrlHttpsRelativeTrading);
+            return ApiHttpClient.GetData<ApiCallResponse<List<MarketData>>>("getMarkets", ApiUrlHttpsRelativeTrading);
         }
     }
 }
