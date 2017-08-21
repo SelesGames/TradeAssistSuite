@@ -1,12 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using Shared.Http;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using System.Linq;
 
 namespace NPoloniex.API.Http
 {
@@ -22,8 +19,6 @@ namespace NPoloniex.API.Http
         public string BaseUrl { get; }
 
         public static readonly Encoding Encoding = Encoding.ASCII;
-        static readonly JsonSerializer jsonSerializer = 
-            new JsonSerializer { NullValueHandling = NullValueHandling.Ignore };
 
         public Trading Trading { get; }
         public Wallet Wallet { get; }
@@ -79,30 +74,15 @@ namespace NPoloniex.API.Http
 
         async Task<T> DeserializeResponseJson<T>(HttpResponseMessage response)
         {
-            T responseObject = default(T);
-            Exception deserializeException = null;
-
-            try
+            var (deserializedResponse, error) = await response.DeserializeJsonResponseAs<T>();
+            if (error.isError)
             {
-                using (var s = await response.Content.ReadAsStreamAsync())
-                using (var sr = new StreamReader(s))
-                using (var jr = new JsonTextReader(sr))
-                {
-                    responseObject = jsonSerializer.Deserialize<T>(jr);
-                }
+                throw new HttpResponseDeserializationException(error.contentAsString, error.exception);
             }
-            catch (Exception ex)
+            else
             {
-                deserializeException = ex;
+                return deserializedResponse;
             }
-
-            if (deserializeException != null)
-            {
-                var stringContent = await response.Content.ReadAsStringAsync();
-                throw new HttpResponseDeserializationException(stringContent, deserializeException);
-            }
-
-            return responseObject;
         }
 
         private static string AppendParameters(string[] parameters)
