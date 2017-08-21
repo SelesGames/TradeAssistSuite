@@ -45,6 +45,8 @@ namespace TradeAssist.Realtime.Candlestick
 
                         foreach (var item in tick.Fills)
                         {
+                            Console.WriteLine($"Received trade event: Bittrex {item.OrderType} {tick.Marketname}, {item.Quantity} at {item.Rate}");
+
                             var rate = item.Rate;
 
                             // Update local low and local high price

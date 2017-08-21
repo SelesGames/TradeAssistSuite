@@ -37,7 +37,7 @@ namespace TradeAssist.Realtime.Candlestick.ConsoleTestConsumer
                 {
                     await hubConnection.Start();
                     connected = true;
-                    Console.WriteLine("Connected");
+                    Console.WriteLine($"Connected to {ConnectionString}");
                 }
                 catch { }
 
@@ -45,7 +45,7 @@ namespace TradeAssist.Realtime.Candlestick.ConsoleTestConsumer
                     await Task.Delay(retryIntervalInMilliseconds);
             }
 
-            await candleHubProxy.Invoke("subscribe", "BTC-ANS");
+            await candleHubProxy.Invoke("subscribe", "BTC-NEO");
         }
 
         void OnData(dynamic d)

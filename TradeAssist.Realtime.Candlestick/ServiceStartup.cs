@@ -21,7 +21,7 @@ namespace TradeAssist.Realtime.Candlestick
             try
             {
                 singalRStartupDisposeHandle = WebApp.Start<WebAppStartup>(address);
-                Console.WriteLine("Server running");
+                Console.WriteLine($"Server running on {address}");
 
                 var dependencyResolver = GlobalHost.DependencyResolver;
                 var connectionManager = dependencyResolver.Resolve<IConnectionManager>();
@@ -58,6 +58,13 @@ namespace TradeAssist.Realtime.Candlestick
 
         public void OnCandlesticks(List<Candle> pc)
         {
+            Console.WriteLine();
+            foreach (var candle in pc)
+            {
+                Console.WriteLine($"OUTPUT CANDLE: {candle.CurrencyPair} {candle.CandleSizeText}");
+            }
+            Console.WriteLine();
+
             var targets = hubContext?.Clients.Group("oneMinute");
             targets.onTick(pc);
         }
