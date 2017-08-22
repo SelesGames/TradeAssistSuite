@@ -21,16 +21,28 @@ namespace TradeAssist.DocumentStorage
             ("TradeAssist", "StinkBids")
         };
 
-        public static void Initialize(string endpointUrl, string primaryKey)
+        internal TADocumentClient(string endpointUrl, string primaryKey)
         {
             client = new DocumentClient(new Uri(endpointUrl), primaryKey, new ConnectionPolicy { EnableEndpointDiscovery = false });
-            InitializeDatabaseAndCollectionsAsync().Wait();
+
+            Users = new TypedDocumentClient<TradeAssistUser>(this,
+                DatabaseCollectionPairs[0].Item1,
+                DatabaseCollectionPairs[0].Item2);
+
+            StinkBids = new TypedDocumentClient<StinkBid>(this,
+                DatabaseCollectionPairs[1].Item1,
+                DatabaseCollectionPairs[1].Item2);
         }
+
+        public TypedDocumentClient<StinkBid> StinkBids { get; }
+        public TypedDocumentClient<TradeAssistUser> Users { get; }
+
+
 
 
         #region Initialization
 
-        static async Task InitializeDatabaseAndCollectionsAsync()
+        public static async Task InitializeDatabaseAndCollectionsAsync()
         {
             var distinctDatabases = DatabaseCollectionPairs.Select(db => db.Item1).Distinct();
             //await Task.WhenAll(distinctDatabases.Select(CreateDatabaseIfNotExistsAsync));
@@ -99,15 +111,5 @@ namespace TradeAssist.DocumentStorage
         }
 
         #endregion create database and collections
-
-
-        public TypedDocumentClient<StinkBid> StinkBids { get; }
-
-        public TADocumentClient()
-        {
-            StinkBids = new TypedDocumentClient<StinkBid>(this,
-                DatabaseCollectionPairs[1].Item1,
-                DatabaseCollectionPairs[1].Item2);
-        }
     }
 }

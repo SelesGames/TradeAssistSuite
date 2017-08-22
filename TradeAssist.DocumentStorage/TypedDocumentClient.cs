@@ -11,14 +11,12 @@ namespace TradeAssist.DocumentStorage
 {
     public class TypedDocumentClient<T> where T : new()
     {
-        //readonly TADocumentClient innerClient;
         readonly string databaseId;
         readonly string collectionId;
         readonly DocumentClient client;
 
         internal TypedDocumentClient(TADocumentClient client, string databaseId, string collectionId)
         {
-            //this.innerClient = client;
             this.client = client.Client;
             this.databaseId = databaseId;
             this.collectionId = collectionId;

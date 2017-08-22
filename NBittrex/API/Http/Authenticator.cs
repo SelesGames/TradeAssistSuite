@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace NPoloniex.API.Http
+namespace NBittrex.API.Http
 {
     public class Authenticator
     {
