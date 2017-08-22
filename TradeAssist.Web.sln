@@ -3,29 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.8
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NBittrex", "NBittrex\NBittrex.csproj", "{2CA165B6-AB53-4144-9116-BC2C19CDA8DA}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NPoloniex", "NPoloniex\NPoloniex.csproj", "{161A9820-0240-4A01-BE88-A7F8E2CA2380}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared.Http", "Shared.Http\Shared.Http.shproj", "{6D51C9C8-11AD-4884-8475-055E23581AED}"
-EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Shared.Http\Http.Shared.projitems*{6d51c9c8-11ad-4884-8475-055e23581aed}*SharedItemsImports = 13
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2CA165B6-AB53-4144-9116-BC2C19CDA8DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2CA165B6-AB53-4144-9116-BC2C19CDA8DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2CA165B6-AB53-4144-9116-BC2C19CDA8DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2CA165B6-AB53-4144-9116-BC2C19CDA8DA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{161A9820-0240-4A01-BE88-A7F8E2CA2380}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{161A9820-0240-4A01-BE88-A7F8E2CA2380}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{161A9820-0240-4A01-BE88-A7F8E2CA2380}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{161A9820-0240-4A01-BE88-A7F8E2CA2380}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
