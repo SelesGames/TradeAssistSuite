@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace TradeGuard.Logic
 {
-    public static partial class Func
+    public static partial class Functions
     {
         public static async Task<(TradeGuardSummary summary, dynamic error)> GetBalances(string userId)
         {

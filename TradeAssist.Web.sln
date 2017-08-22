@@ -12,8 +12,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NPoloniex", "NPoloniex\NPol
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeAssist.Realtime.Ticker", "TradeAssist.Realtime\TradeAssist.Realtime.Ticker.csproj", "{F47C4A51-CF71-4EEA-AC2E-6BF6DD5495E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeAssist.Realtime.ConsoleTestConsumer", "TradeAssist.Realtime.ConsoleTestConsumer\TradeAssist.Realtime.ConsoleTestConsumer.csproj", "{43888AEE-5139-45A5-B736-452F5EE9E88B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NBittrex", "NBittrex\NBittrex.csproj", "{B45A59A3-82F2-4698-81FF-D6D4D63BFBEA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeAssist.Realtime.Candlestick", "TradeAssist.Realtime.Candlestick\TradeAssist.Realtime.Candlestick.csproj", "{4BFDFCD0-B37C-44E8-A8F3-3B904DF56BFE}"
@@ -28,11 +26,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "teststandard", "teststandar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "testAzureFunction", "testAzureFunction\testAzureFunction.csproj", "{58A8B970-A242-4F91-A096-9F23DC581FD9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testcoreconsole", "testcoreconsole\testcoreconsole.csproj", "{5E783C70-347F-428D-A0D1-B2B9751F4B6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "testcoreconsole", "testcoreconsole\testcoreconsole.csproj", "{5E783C70-347F-428D-A0D1-B2B9751F4B6C}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared.Http", "Http.Shared\Shared.Http.shproj", "{6D51C9C8-11AD-4884-8475-055E23581AED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewAzureTestfunctions", "NewAzureTestfunctions\NewAzureTestfunctions.csproj", "{94A50D5A-5F0C-4250-BB46-EE6B1AFAA387}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewAzureTestfunctions", "NewAzureTestfunctions\NewAzureTestfunctions.csproj", "{94A50D5A-5F0C-4250-BB46-EE6B1AFAA387}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -72,14 +70,6 @@ Global
 		{F47C4A51-CF71-4EEA-AC2E-6BF6DD5495E2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F47C4A51-CF71-4EEA-AC2E-6BF6DD5495E2}.Release|x64.ActiveCfg = Release|Any CPU
 		{F47C4A51-CF71-4EEA-AC2E-6BF6DD5495E2}.Release|x64.Build.0 = Release|Any CPU
-		{43888AEE-5139-45A5-B736-452F5EE9E88B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{43888AEE-5139-45A5-B736-452F5EE9E88B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{43888AEE-5139-45A5-B736-452F5EE9E88B}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{43888AEE-5139-45A5-B736-452F5EE9E88B}.Debug|x64.Build.0 = Debug|Any CPU
-		{43888AEE-5139-45A5-B736-452F5EE9E88B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{43888AEE-5139-45A5-B736-452F5EE9E88B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{43888AEE-5139-45A5-B736-452F5EE9E88B}.Release|x64.ActiveCfg = Release|Any CPU
-		{43888AEE-5139-45A5-B736-452F5EE9E88B}.Release|x64.Build.0 = Release|Any CPU
 		{B45A59A3-82F2-4698-81FF-D6D4D63BFBEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B45A59A3-82F2-4698-81FF-D6D4D63BFBEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B45A59A3-82F2-4698-81FF-D6D4D63BFBEA}.Debug|x64.ActiveCfg = Debug|Any CPU
