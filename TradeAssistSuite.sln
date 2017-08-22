@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradeGuard.Logic", "TradeGu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "teststandard", "teststandard\teststandard.csproj", "{6F017095-EA45-4574-8E49-57F4DEF9F3F9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeAssist.Realtime.Candlestick.ConsoleTestConsumer", "TradeAssist.Realtime.Candlestick.ConsoleTestConsumer\TradeAssist.Realtime.Candlestick.ConsoleTestConsumer.csproj", "{8FE466B3-0C4E-4ECC-88EE-ED3863170FF9}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		TradeAssist.Common\TradeAssist.Common.projitems*{b2018fca-ae99-4046-ad4f-d82e720452fd}*SharedItemsImports = 4
@@ -57,6 +59,10 @@ Global
 		{6F017095-EA45-4574-8E49-57F4DEF9F3F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F017095-EA45-4574-8E49-57F4DEF9F3F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F017095-EA45-4574-8E49-57F4DEF9F3F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FE466B3-0C4E-4ECC-88EE-ED3863170FF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FE466B3-0C4E-4ECC-88EE-ED3863170FF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FE466B3-0C4E-4ECC-88EE-ED3863170FF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FE466B3-0C4E-4ECC-88EE-ED3863170FF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
