@@ -3,12 +3,12 @@
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
-    <SharedGUID>da8393b0-3b19-485d-867d-a2e19308cf7a</SharedGUID>
+    <SharedGUID>036709ae-6517-41ce-9de8-a4a4a763b85b</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>TradeAssist.Realtime.Shared</Import_RootNamespace>
+    <Import_RootNamespace>TradeAssist.Realtime.Shared.Hosting</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Constants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebAppStartup.cs" />
   </ItemGroup>
 </Project>

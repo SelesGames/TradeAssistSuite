@@ -103,5 +103,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="..\TradeAssist.Realtime.Shared\TradeAssist.Realtime.Shared.projitems" Label="Shared" />
+  <Import Project="..\TradeAssist.Realtime.Shared.Hosting\TradeAssist.Realtime.Shared.Hosting.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
