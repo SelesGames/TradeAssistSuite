@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shared.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -155,19 +156,19 @@ namespace NBittrex.API.Http
         Task<T> Call<T>(string method, params (string, object)[] parameters)
         {
             var uriBuilder = new StringBuilder(string.Format(ApiCallTemplate, ApiVersion, method));
+            var uriParametersBuilder = new UriParametersBuilder();
 
             // append parameters
-            var extraParameters = FormatParameters(parameters);
-            uriBuilder.Append(extraParameters);
+            uriParametersBuilder.AddParameters(parameters);
 
             // if non-public api, append api key and nonce parameters
             if (!method.StartsWith("public"))
             {
                 var nonce = DateTime.UtcNow.Ticks;
-                var signedParameters = FormatParameters(("apikey", apiKey), ("nonce", nonce));
-                uriBuilder.Append(signedParameters);
+                uriParametersBuilder.AddParameters(("apikey", apiKey), ("nonce", nonce));
             }
 
+            uriBuilder.Append(uriParametersBuilder.ToString());
             var uri = uriBuilder.ToString();
 
             if (method.StartsWith("public"))
@@ -187,28 +188,6 @@ namespace NBittrex.API.Http
             bool DoesCallHaveEffects()
             {
                 return !method.StartsWith("market/get") && !method.StartsWith("account/get");
-            }
-        }
-
-        static StringBuilder FormatParameters(params (string, object)[] parameters)
-        {
-            var extraParameters = new StringBuilder();
-
-            if (parameters != null)
-            {
-                foreach (var item in parameters)
-                {
-                    extraParameters.Append(
-                        $"{GetCorrectParameterSeparator()}{item.Item1}={item.Item2}"
-                    );
-                }
-            }
-
-            return extraParameters;
-
-            string GetCorrectParameterSeparator()
-            {
-                return extraParameters.Length == 0 ? "?" : "&";
             }
         }
     }
