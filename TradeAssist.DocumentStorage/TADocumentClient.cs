@@ -32,11 +32,20 @@ namespace TradeAssist.DocumentStorage
             StinkBids = new TypedDocumentClient<StinkBid>(this,
                 DatabaseCollectionPairs[1].Item1,
                 DatabaseCollectionPairs[1].Item2);
+
+            UsersDynamic = new DynamicDocumentClient(this,
+                DatabaseCollectionPairs[0].Item1,
+                DatabaseCollectionPairs[0].Item2);
+
+            StinkBidsDynamic = new DynamicDocumentClient(this,
+                DatabaseCollectionPairs[1].Item1,
+                DatabaseCollectionPairs[1].Item2);
         }
 
         public TypedDocumentClient<StinkBid> StinkBids { get; }
         public TypedDocumentClient<TradeAssistUser> Users { get; }
-
+        public DynamicDocumentClient StinkBidsDynamic { get; }
+        public DynamicDocumentClient UsersDynamic { get; }
 
 
 

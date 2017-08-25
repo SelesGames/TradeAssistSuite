@@ -6,7 +6,7 @@ namespace TradeAssist.DocumentStorage
 {
     public class TradeAssistUser
     {
-        public string Id { get; set; }
+        public string id { get; set; }
         public BittrexCredentials Bittrex { get; set; }
     }
 
