@@ -9,6 +9,7 @@
     <Import_RootNamespace>TradeAssist.Common</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)BitcoinMath.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UserId.cs" />
   </ItemGroup>
 </Project>
