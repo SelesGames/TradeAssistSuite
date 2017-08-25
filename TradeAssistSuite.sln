@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.8
+VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeAssistSuite", "TradeAssistSuite\TradeAssistSuite.csproj", "{B2018FCA-AE99-4046-AD4F-D82E720452FD}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoloniexApi.Net", "PoloniexApi.Net\PoloniexApi.Net\PoloniexApi.Net.csproj", "{BC5546FA-4F27-4A57-ABE0-2691D1E8B51C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NPoloniex", "NPoloniex\NPoloniex.csproj", "{2BDEFDC6-E211-453F-B160-A2F9B3F83EC5}"
 EndProject
@@ -17,12 +15,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NBittrex", "NBittrex\NBittr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradeGuard.Logic", "TradeGuard.Logic\TradeGuard.Logic.csproj", "{2B244FB2-7F45-4E6F-BAFA-18A2BF8C6C8E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "teststandard", "teststandard\teststandard.csproj", "{6F017095-EA45-4574-8E49-57F4DEF9F3F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeInsights.Logic", "TradeInsights.Logic\TradeInsights.Logic.csproj", "{65471F52-2E02-49D2-B17F-3D57822EF4EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeAssist.Realtime.Candlestick.ConsoleTestConsumer", "TradeAssist.Realtime.Candlestick.ConsoleTestConsumer\TradeAssist.Realtime.Candlestick.ConsoleTestConsumer.csproj", "{8FE466B3-0C4E-4ECC-88EE-ED3863170FF9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StinkBidder.Monitor", "StinkBidder.Monitor\StinkBidder.Monitor.csproj", "{C1AFAEEC-C09B-49D4-9DAA-DDB1BDF7EB4D}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared.Http", "Shared.Http\Shared.Http.shproj", "{6D51C9C8-11AD-4884-8475-055E23581AED}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Shared.Http\Http.Shared.projitems*{6d51c9c8-11ad-4884-8475-055e23581aed}*SharedItemsImports = 13
 		TradeAssist.Common\TradeAssist.Common.projitems*{b2018fca-ae99-4046-ad4f-d82e720452fd}*SharedItemsImports = 4
 		TradeAssist.Common\TradeAssist.Common.projitems*{b4f33fdc-2a43-48d5-9854-0e3838b62a98}*SharedItemsImports = 13
 	EndGlobalSection
@@ -35,10 +36,6 @@ Global
 		{B2018FCA-AE99-4046-AD4F-D82E720452FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2018FCA-AE99-4046-AD4F-D82E720452FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2018FCA-AE99-4046-AD4F-D82E720452FD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BC5546FA-4F27-4A57-ABE0-2691D1E8B51C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BC5546FA-4F27-4A57-ABE0-2691D1E8B51C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BC5546FA-4F27-4A57-ABE0-2691D1E8B51C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BC5546FA-4F27-4A57-ABE0-2691D1E8B51C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2BDEFDC6-E211-453F-B160-A2F9B3F83EC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2BDEFDC6-E211-453F-B160-A2F9B3F83EC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BDEFDC6-E211-453F-B160-A2F9B3F83EC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -55,14 +52,14 @@ Global
 		{2B244FB2-7F45-4E6F-BAFA-18A2BF8C6C8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B244FB2-7F45-4E6F-BAFA-18A2BF8C6C8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B244FB2-7F45-4E6F-BAFA-18A2BF8C6C8E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6F017095-EA45-4574-8E49-57F4DEF9F3F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6F017095-EA45-4574-8E49-57F4DEF9F3F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6F017095-EA45-4574-8E49-57F4DEF9F3F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6F017095-EA45-4574-8E49-57F4DEF9F3F9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8FE466B3-0C4E-4ECC-88EE-ED3863170FF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8FE466B3-0C4E-4ECC-88EE-ED3863170FF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8FE466B3-0C4E-4ECC-88EE-ED3863170FF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8FE466B3-0C4E-4ECC-88EE-ED3863170FF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65471F52-2E02-49D2-B17F-3D57822EF4EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65471F52-2E02-49D2-B17F-3D57822EF4EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65471F52-2E02-49D2-B17F-3D57822EF4EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65471F52-2E02-49D2-B17F-3D57822EF4EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1AFAEEC-C09B-49D4-9DAA-DDB1BDF7EB4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1AFAEEC-C09B-49D4-9DAA-DDB1BDF7EB4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1AFAEEC-C09B-49D4-9DAA-DDB1BDF7EB4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1AFAEEC-C09B-49D4-9DAA-DDB1BDF7EB4D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

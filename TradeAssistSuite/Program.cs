@@ -1,23 +1,34 @@
-﻿using NPoloniex.API;
-using NPoloniex.API.Http;
+﻿using Akka.Actor;
 using NPoloniex.API.Push;
+using StinkBidder.Monitor;
+using StinkBidder.Monitor.Actors;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using static TradeAssist.Suite.PrintHelper;
-using Akka.Actor;
+using TradeInsights.Logic.Poloniex.Positions;
+using static TradeInsights.Logic.Poloniex.Positions.PrintHelper;
 
-namespace TradeAssist.Suite
+namespace TradeAssistSuite
 {
     class Program
     {
         static void Main(string[] args)
         {
-            var bittrexHub = new NBittrex.BittrexHub();
+            var commandList = new CommandList();
+            while (true)
+            {
+                Console.Write("> ");
+                var command = Console.ReadLine();
+                commandList.ProcessCommand(command);
+                Console.WriteLine();
+            }
+
+
+            /*var bittrexHub = new NBittrex.BittrexHub();
             bittrexHub.Initialize().Wait();
             bittrexHub.SubscribeToTicker("BTC-ANS").Wait();
             //bittrexHub.SubscribeToFlood().Wait();
-            Console.ReadLine();
+            Console.ReadLine();*/
 
             return;
 
@@ -33,7 +44,7 @@ namespace TradeAssist.Suite
                     BuyPrice = triggerPrice - (decimal)o * 0.000001m,
                     TriggerPrice = triggerPrice - (decimal)o * 0.000001m,
                     CurrencyPair = "BTC_STRAT",
-                    UserId = o,
+                    UserId = o.ToString(),
                 });
 
             var monitorRef = MyActorSystem.Current.GetMonitor("BTC_STRAT");
@@ -136,37 +147,8 @@ namespace TradeAssist.Suite
 
         static async Task GetTradeHistory(string currency)
         {
-            currency = currency.ToUpper();
-
-            CurrencyPair currencyPair;
-
-            if (CurrencyPair.IsCurrencyPair(currency))
-                currencyPair = currency;
-            else
-                currencyPair = CurrencyPair.PrependBitcoin(currency);
-
-
-            var authenticator = new Authenticator(
-                "F5QR8MJE-HN5LH4WJ-8X9758YH-NDLRE7NJ",
-                "0be35048de6102dfa9927504b4099aac222636f2dd96983f9713fe0c9b93d489f38ae08d9e3e3b4b3509ef77c182f9000a4b8b21c49d8af84ad0863c6937f932");
-            var client = new ApiHttpClient(authenticator);
-
-            var trades = await client.Trading.GetTrades(currencyPair, DateTime.Parse("1/1/2008"), DateTime.UtcNow);
-
-            var balances = await client.Wallet.GetCompleteBalances();
-            //var currentTick = Ticker.Current[currencyPair];
-            //var currentPrice = currentTick.Last;
-
-            var balance = balances[currencyPair.QuoteCurrency];
-            var balanceSize = balance.Available + balance.OnOrders;
-            var currentValue = balance.BtcValue;
-
-            var calculatedCurrentPrice = balance.BtcValue / balanceSize;
-            var roundedCalculatedCurrentPrice = Math.Round(calculatedCurrentPrice, 8);
-
-            var positionHistory = PositionCalculator.ExtractPositions(balanceSize, roundedCalculatedCurrentPrice, trades);
-
-            PrettyPrint(positionHistory.Open);
+            var positionHistory = await TradeInsights.Logic.Poloniex.Functions.GetPositionHistory(currency);
+            positionHistory.Open.PrettyPrint();
         }
     }
 }

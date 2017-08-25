@@ -2,21 +2,15 @@
 using NPoloniex.API.Push;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using static TradeAssist.Realtime.Constants;
 
-namespace TradeAssist.Realtime
-{
-    internal interface IOnPriceChangeAction
-    {
-        void OnPriceChange(PriceChange pc);
-    }
+namespace TradeAssist.Realtime.Ticker
 
-    class PriceTracker
+{
+    public class PriceTracker
     {
-        Ticker poloniexTicker = Ticker.Current;
         Dictionary<string, PriceInfo> priceInfoLookup = new Dictionary<string, PriceInfo>();
 
         public static PriceTracker Current { get; } = new PriceTracker();
@@ -68,6 +62,7 @@ namespace TradeAssist.Realtime
                         volume: val.BaseVolume);
                 }
 
+                var poloniexTicker = NPoloniex.API.Push.Ticker.Current;
                 poloniexTicker.Tick += (_, tick) =>
                     OnPriceEvent(
                         currencyPair: Canonical(tick.CurrencyPair, PoloniexSeparator),

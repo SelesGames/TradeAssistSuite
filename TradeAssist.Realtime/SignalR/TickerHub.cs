@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
-using Owin;
 using System.Linq;
+using TradeAssist.Realtime.Ticker;
 using static TradeAssist.Realtime.Constants;
 
-namespace TradeAssist.Realtime
+namespace TradeAssist.Realtime.SignalR
 {
     /// <summary>
     /// Simple SignalR hub that provides Pub/Sub for ticker pairs, as well as retrieval of last price

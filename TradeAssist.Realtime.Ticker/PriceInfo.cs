@@ -2,7 +2,7 @@
 using static System.Math;
 
 
-namespace TradeAssist.Realtime
+namespace TradeAssist.Realtime.Ticker
 {
     /// <summary>
     /// Stores prices across exchanges for a particular currency - calculates VolumeWeightedPrice

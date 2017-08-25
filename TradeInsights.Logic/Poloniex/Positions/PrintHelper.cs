@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System;
 
-namespace TradeAssist.Suite
+namespace TradeInsights.Logic.Poloniex.Positions
 {
     public static class PrintHelper
     {
-        public static void PrettyPrint(OpenPosition openPosition)
+        public static void PrettyPrint(this OpenPosition openPosition)
         {
             var output = new
             {

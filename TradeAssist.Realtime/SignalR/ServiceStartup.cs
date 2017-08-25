@@ -3,9 +3,9 @@ using Microsoft.AspNet.SignalR.Infrastructure;
 using Microsoft.Owin.Hosting;
 using System;
 using System.Threading.Tasks;
-using System.Collections.Generic;
+using TradeAssist.Realtime.Ticker;
 
-namespace TradeAssist.Realtime
+namespace TradeAssist.Realtime.SignalR
 {
     /// <summary>
     /// Entry point for the startup of the entire Service

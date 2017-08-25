@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using TradeAssist.Realtime.SignalR;
 
 namespace TradeAssist.Realtime
 {
@@ -11,9 +12,6 @@ namespace TradeAssist.Realtime
             using (var serviceStartup = new ServiceStartup())
             {
                 serviceStartup.Startup("http://localhost:1942").Wait();
-                //Console.ReadLine();
-                //var waithandle = new AutoResetEvent(false);
-                //waithandle.WaitOne();
                 quitEvent.WaitOne();
             }
         }

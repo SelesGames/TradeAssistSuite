@@ -1,4 +1,4 @@
-﻿namespace TradeAssist.Realtime
+﻿namespace TradeAssist.Realtime.Ticker
 {
     public class PriceChange
     {

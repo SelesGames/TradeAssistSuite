@@ -1,16 +1,13 @@
 ﻿using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
-using NPoloniex.API;
 using NPoloniex.API.Http;
 using NPoloniex.API.Push;
-using Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace TradeAssist.Realtime
+namespace TradeAssist.Realtime.SignalR
 {
     class VolumeWeightedPrice
     {

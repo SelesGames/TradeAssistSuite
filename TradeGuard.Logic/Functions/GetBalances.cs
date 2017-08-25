@@ -6,29 +6,33 @@ namespace TradeGuard.Logic
 {
     public static partial class Functions
     {
-        public static async Task<(TradeGuardSummary summary, dynamic error)> GetBalances(string userId)
+        public static async Task<(TradeGuardSummary summary, dynamic error)> GetBalances(string userId, string bittrexApiKey, string bittrexSecret)
         {
-            var user = await GetUser(userId);
+            /*var user = await GetUser(userId);
 
             if (user == null)
             {
                 return (null, new { errorMessage = "no such user with id exists" });
-            }
+            }*/
 
             var bittrexClient = new Exchange(
                 new ExchangeContext
                 {
-                    ApiKey = user.BittrexApiKey,
-                    Secret = user.Secret,
+                    ApiKey = bittrexApiKey,
+                    Secret = bittrexSecret,
                     Simulate = false,
                 });
 
             var balances = await bittrexClient.GetBalances();
+            var nonZeroBalances = balances.Where(o => o.Balance > 2);
+            nonZeroBalances = nonZeroBalances.Where(o => o.Currency != "BTC-BTC").ToList();
 
             var summary = new TradeGuardSummary();
 
-            foreach (var balance in balances)
+            foreach (var balance in nonZeroBalances)
             {
+                await Task.Delay(1005); // delay as a hack around bittrex api rate limiting
+
                 var openOrders = await bittrexClient.GetOpenOrders(balance.Currency);
                 decimal totalQuantity = 0;
                 foreach (var openOrder in openOrders.Where(o => IsValidStopLimitOrder(o)))
@@ -63,7 +67,10 @@ namespace TradeGuard.Logic
 
         static bool IsValidStopLimitOrder(OpenOrder o)
         {
-            return o.OrderType == OpenOrderType.Limit_Sell;
+            return
+                o.OrderType == OpenOrderType.Limit_Sell &&
+                o.Condition == "LESS_THAN" &&
+                !string.IsNullOrEmpty(o.ConditionTarget);
             //&& o.Price < currentPrice // need current price!
         }
     }
