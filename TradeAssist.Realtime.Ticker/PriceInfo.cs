@@ -9,20 +9,26 @@ namespace TradeAssist.Realtime.Ticker
     /// </summary>
     public class PriceInfo
     {
+        public string CurrencyPair { get; }
         public decimal VolumeWeightedPrice { get; private set; }
-        public Dictionary<string, (decimal price, decimal volume)> Prices { get; }
-            = new Dictionary<string, (decimal, decimal)>();
+        public IDictionary<string, ExchangePriceInfo> Prices { get; }
+            = new Dictionary<string, ExchangePriceInfo>();
 
-        public void AdjustForLatestPrice(string exchange, decimal exchangePrice, decimal exchangeVolume)
+        public PriceInfo(string currencyPair)
         {
-            Prices[exchange] = (exchangePrice, exchangeVolume);
+            CurrencyPair = currencyPair;
+        }
+
+        public void AdjustForLatestPrice(string exchange, ExchangePriceInfo exchangePriceInfo)
+        {
+            Prices[exchange] = exchangePriceInfo;
 
             decimal volumeWeightedPriceTotal = 0m;
             decimal volumeTotal = 0m;
 
             foreach (var p in Prices)
             {
-                var (price, volume) = p.Value;
+                var (price, volume) = (p.Value.Price, p.Value.Volume);
                 volumeWeightedPriceTotal += price * volume;
                 volumeTotal += volume;
             }

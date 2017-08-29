@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.AspNet.SignalR.Client, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Client.2.2.2\lib\net45\Microsoft.AspNet.SignalR.Client.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -56,6 +59,14 @@
     <ProjectReference Include="..\NBinance\NBinance.csproj">
       <Project>{450520ee-af5c-47a7-a2fa-98e7b487fb09}</Project>
       <Name>NBinance</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TradeAssist.Realtime.Ticker\TradeAssist.Realtime.Ticker.csproj">
+      <Project>{36b3c535-4c94-47bd-b1d9-d8c4993a5516}</Project>
+      <Name>TradeAssist.Realtime.Ticker</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TradeAssist.Realtime.Trades\TradeAssist.Realtime.Trades.csproj">
+      <Project>{c1fa065f-9787-40ee-aca9-b5caaff11d7d}</Project>
+      <Name>TradeAssist.Realtime.Trades</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

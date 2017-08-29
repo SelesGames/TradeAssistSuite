@@ -88,7 +88,7 @@ namespace TradeAssist.Realtime.Candlestick
                             volume: aggregateVolume);
                     };
 
-                await bittrexHub.Initialize();
+                await bittrexHub.Connect();
 
                 var httpClient = new NBittrex.API.Http.ApiHttpClient();
                 var markets = await httpClient.Public.GetMarkets();

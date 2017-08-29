@@ -46,7 +46,7 @@ namespace TradeAssist.Realtime.SignalR
         public void OnPriceChange(PriceChange pc)
         {
             var targets = hubContext?.Clients.Group(pc.CurrencyPair);
-            var output = new object[] { pc.CurrencyPair, pc.VolumeWeightedPrice, pc.Exchange, pc.ExchangePrice };
+            var output = new object[] { pc.CurrencyPair, pc.VolumeWeightedPrice, pc.Exchange, pc.Price, pc.HighestBid, pc.LowestAsk };
             targets.onTick(output);
         }
 

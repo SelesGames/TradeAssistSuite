@@ -31,12 +31,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Exchange Client Libraries",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneralTester", "GeneralTester\GeneralTester.csproj", "{17CCD281-E515-49A3-83F7-9A236ED37B08}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "TradeAssist.Common", "TradeAssist.Common\TradeAssist.Common.shproj", "{B4F33FDC-2A43-48D5-9854-0E3838B62A98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeAssist.Realtime.Candlestick.Monitor.WebApi", "TradeAssist.Realtime.Candlestick.Monitor.WebApi\TradeAssist.Realtime.Candlestick.Monitor.WebApi.csproj", "{7FCC7817-FEC8-48B3-924D-58B73C7EB2CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeAssist.Realtime.Trades", "TradeAssist.Realtime.Trades\TradeAssist.Realtime.Trades.csproj", "{C1FA065F-9787-40EE-ACA9-B5CAAFF11D7D}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		TradeAssist.Realtime.Shared.Hosting\TradeAssist.Realtime.Shared.Hosting.projitems*{036709ae-6517-41ce-9de8-a4a4a763b85b}*SharedItemsImports = 13
 		TradeAssist.Realtime.Shared.Hosting\TradeAssist.Realtime.Shared.Hosting.projitems*{4bfdfcd0-b37c-44e8-a8f3-3b904df56bfe}*SharedItemsImports = 4
 		TradeAssist.Realtime.Shared\TradeAssist.Realtime.Shared.projitems*{4bfdfcd0-b37c-44e8-a8f3-3b904df56bfe}*SharedItemsImports = 4
 		Shared.Http\Http.Shared.projitems*{6d51c9c8-11ad-4884-8475-055e23581aed}*SharedItemsImports = 13
+		TradeAssist.Common\TradeAssist.Common.projitems*{b4f33fdc-2a43-48d5-9854-0e3838b62a98}*SharedItemsImports = 13
 		TradeAssist.Realtime.Shared\TradeAssist.Realtime.Shared.projitems*{da8393b0-3b19-485d-867d-a2e19308cf7a}*SharedItemsImports = 13
 		TradeAssist.Realtime.Shared.Hosting\TradeAssist.Realtime.Shared.Hosting.projitems*{f47c4a51-cf71-4eea-ac2e-6bf6dd5495e2}*SharedItemsImports = 4
 		TradeAssist.Realtime.Shared\TradeAssist.Realtime.Shared.projitems*{f47c4a51-cf71-4eea-ac2e-6bf6dd5495e2}*SharedItemsImports = 4
@@ -86,6 +93,14 @@ Global
 		{17CCD281-E515-49A3-83F7-9A236ED37B08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17CCD281-E515-49A3-83F7-9A236ED37B08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17CCD281-E515-49A3-83F7-9A236ED37B08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FCC7817-FEC8-48B3-924D-58B73C7EB2CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FCC7817-FEC8-48B3-924D-58B73C7EB2CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FCC7817-FEC8-48B3-924D-58B73C7EB2CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FCC7817-FEC8-48B3-924D-58B73C7EB2CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1FA065F-9787-40EE-ACA9-B5CAAFF11D7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1FA065F-9787-40EE-ACA9-B5CAAFF11D7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1FA065F-9787-40EE-ACA9-B5CAAFF11D7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1FA065F-9787-40EE-ACA9-B5CAAFF11D7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

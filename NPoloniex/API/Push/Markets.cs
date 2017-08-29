@@ -7,21 +7,25 @@ namespace NPoloniex.API.Push
     public static class Markets
     {
         static Dictionary<int, CurrencyPair> currencyPairs;
-        static DateTime lastRefreshed;
+        //static DateTime lastRefreshed;
         static BootupStatus status = BootupStatus.None;
+        static Task initializationTask;
 
         public static Dictionary<int, CurrencyPair> CurrencyPairs => GetCurrencyPairs();
 
-        public static async Task Initialize()
+        public static Task Initialize()
         {
-            if (status == BootupStatus.Initializing || status == BootupStatus.Initialized)
-                return;
+            if (initializationTask == null)
+                initializationTask = init();
 
-            status = BootupStatus.Initializing;
+            return initializationTask;
 
-            currencyPairs = await MarketsHelper.GetMarkets();
-
-            status = BootupStatus.Initialized;  
+            async Task init()
+            {
+                status = BootupStatus.Initializing;
+                currencyPairs = await MarketsHelper.GetMarkets();
+                status = BootupStatus.Initialized;
+            }
         }
 
         static Dictionary<int, CurrencyPair> GetCurrencyPairs()

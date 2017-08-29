@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shared.Http
 {
-    internal static class JsonResponseDeserializer
+    static class JsonResponseDeserializer
     {
         static readonly JsonSerializer jsonSerializer =
             new JsonSerializer { NullValueHandling = NullValueHandling.Ignore };

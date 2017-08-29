@@ -9,6 +9,8 @@
     <Import_RootNamespace>Shared.Http</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)BaseWebSocketClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IWebSocketMessageHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)JsonResponseDeserializer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UriParametersBuilder.cs" />
   </ItemGroup>

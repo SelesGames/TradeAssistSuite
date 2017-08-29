@@ -32,12 +32,22 @@ namespace NBittrex.API.Http
         bool simulate;
         ApiCall apiCall;
 
-        public Exchange(ExchangeContext context)
+        private Exchange(ExchangeContext context)
         {
             this.apiKey = context.ApiKey;
             this.secret = context.Secret;
             this.simulate = context.Simulate;
             this.apiCall = new ApiCall(this.simulate);
+        }
+
+        public static Exchange CreatePublic(bool simulate = false)
+        {
+            return new Exchange(new ExchangeContext { ApiKey = null, Secret = null, Simulate = simulate });
+        }
+
+        public static Exchange CreateAuthenticated(string apiKey, string secret, bool simulate = false)
+        {
+            return new Exchange(new ExchangeContext { ApiKey = apiKey, Secret = secret, Simulate = simulate });
         }
 
         public Task<AccountBalance> GetBalance(string market)

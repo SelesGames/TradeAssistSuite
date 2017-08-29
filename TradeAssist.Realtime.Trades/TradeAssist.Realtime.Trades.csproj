@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NBinance\NBinance.csproj" />
+    <ProjectReference Include="..\NBittrex\NBittrex.csproj" />
+    <ProjectReference Include="..\NPoloniex\NPoloniex.csproj" />
+  </ItemGroup>
+
+  <Import Project="..\TradeAssist.Realtime.Shared\TradeAssist.Realtime.Shared.projitems" Label="Shared" />
+
+</Project>

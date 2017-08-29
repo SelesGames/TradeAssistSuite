@@ -1,19 +1,18 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.IO;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NBinance.API.Push
+namespace Shared.Http
 {
     /// <summary>
     /// Generic class for subscribing to websockets that pump json data
     /// with help from https://gist.github.com/xamlmonkey/4737291
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    class JsonWebSocketClient<T> : IDisposable
+    class BaseWebSocketClient : IDisposable
     {
         const int BUFFER_SIZE = 16 * 1024; // from http://referencesource.microsoft.com/#System/net/System/Net/WebSockets/WebSocketHelpers.cs,285b8b64a4da6851
         readonly ArraySegment<byte> clientBuffer = ClientWebSocket.CreateClientBuffer(BUFFER_SIZE, BUFFER_SIZE);
@@ -21,21 +20,20 @@ namespace NBinance.API.Push
         readonly Uri uri;
 
         static readonly Encoding readEncoding = Encoding.UTF8;
-        static readonly JsonSerializer jsonSerializer =
-            new JsonSerializer { NullValueHandling = NullValueHandling.Ignore };
 
         bool isConnected = false;
         bool isReceiving = false;
         CancellationToken cancellationToken;
 
-        public JsonWebSocketClient(string uri)
+        public BaseWebSocketClient(string uri)
         {
             this.uri = new Uri(uri);
             client = new ClientWebSocket();
         }
 
-        public IOnDataHandler<T> OnDataHandler { get; set; }
         public bool ReconnectOnServerClose { get; set; }
+        public IWebSocketMessageHandler BinaryMessageHandler { get; set; }
+        public IWebSocketMessageHandler TextMessageHandler { get; set; }
 
         public Task Connect() { return Connect(CancellationToken.None); }
         public async Task Connect(CancellationToken cancellationToken)
@@ -80,26 +78,13 @@ namespace NBinance.API.Push
 
                     if (receiveResult.MessageType == WebSocketMessageType.Binary)
                     {
-                        ProcessBinaryMessage();
+                        BinaryMessageHandler?.OnMessageReceived(ms);
                     }
                     else if (receiveResult.MessageType == WebSocketMessageType.Text)
                     {
-                        var tick = DeserializeJsonToObject(ms);
-                        OnDataHandler?.HandleData(tick);
+                        TextMessageHandler?.OnMessageReceived(ms);
                     }
                 }
-
-                T DeserializeJsonToObject(MemoryStream ms)
-                {
-                    //using (var ms = new MemoryStream(receiveBuffer, 0, messageLength, false))
-                    using (var sr = new StreamReader(ms, readEncoding, false))
-                    using (var reader = new JsonTextReader(sr))
-                    {
-                        return jsonSerializer.Deserialize<T>(reader);
-                    }
-                }
-
-                void ProcessBinaryMessage() { }
             }
         }
 
@@ -113,8 +98,8 @@ namespace NBinance.API.Push
             OnDisconnect();
 
             await client.CloseAsync(
-                WebSocketCloseStatus.NormalClosure, 
-                closeDescription ?? "Server requested closure", 
+                WebSocketCloseStatus.NormalClosure,
+                closeDescription ?? "Server requested closure",
                 CancellationToken.None);
 
             if (isClientInitiated && ReconnectOnServerClose)

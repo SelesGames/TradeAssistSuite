@@ -1,0 +1,17 @@
+﻿- Realtime monitor executed trades
+- Write each trade to Cosmos Db 
+    - format: Trades -> urn:bittrex:btc-eth -> each trade
+    - Id is tradeid from exchange?  Or nonce?  Some unique increment?
+
+Trades ->urn:bittrex:BTC-ETH -> state
+A class that stores state including "updated-to" field
+Redundancy: periodic process that wakes, checks updated-to field, queries API for trades, and submits a bulk set of trades to a stored proc
+Stored procchecks against whether record already exists
+Perhaps returns records with a mismatch (missing, updated)
+Stored proc updated the updated-to field
+Since it happens in stored proc, operation is atomic
+
+Second periodic process wakes on some interval
+Calls a stored proc that scans trades that happened since last scan or completed candle
+Writes new candles to candle table
+Writes summary candle file that has last N candles within its json for fast retrieval

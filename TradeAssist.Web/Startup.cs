@@ -64,8 +64,8 @@ namespace TradeAssist.Web
                 Configuration.GetConnectionString("EventHubConnectionString"),
                 Configuration.GetConnectionString("EventHubName"));
 
-            TARClient.Current.Initialize(Configuration.GetConnectionString("TradeAssistRealtimeSignalRConnectionString"))
-                .Wait();
+            //TARClient.Current.Initialize(Configuration.GetConnectionString("TradeAssistRealtimeSignalRConnectionString"))
+            //    .Wait();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -101,11 +101,6 @@ namespace TradeAssist.Web
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-
-            Task t = null;
-
-            //NPoloniex.API.Push.PoloniexWebSocketClient client = new NPoloniex.API.Push.PoloniexWebSocketClient();
-            //client.Connect();
         }
     }
 }
