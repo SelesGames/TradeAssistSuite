@@ -56,7 +56,7 @@ namespace TradeAssist.Realtime.Trades
             }
         }
 
-        void Poloniex.IOnTradeAction.OnPriceChange(Poloniex.Trade trade)
+        void Poloniex.IOnTradeAction.OnTradeEvent(Poloniex.Trade trade)
         {
             OnTradeAction?.OnTrade(new Trade
             {

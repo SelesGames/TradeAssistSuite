@@ -2,6 +2,6 @@
 {
     public interface IOnTradeAction
     {
-        void OnPriceChange(Trade trade);
+        void OnTradeEvent(Trade trade);
     }
 }

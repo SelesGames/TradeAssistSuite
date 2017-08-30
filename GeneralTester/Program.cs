@@ -14,9 +14,9 @@ namespace GeneralTester
         static void Main(string[] args)
         {
             //TestArbitration().Wait();
-            //TestTrades().Wait();
+            TestBinanceTradeEvents().Wait();
 
-            TestPoloniexTradeListening().Wait();
+            //TestPoloniexTradeListening().Wait();
 
             Console.ReadLine();
         }
@@ -59,13 +59,17 @@ namespace GeneralTester
             }
         }
 
-        static async Task TestTrades()
+        static async Task TestBinanceTradeEvents()
         {
-            //var handle = new Trades().Subscribe("ETH-BTC", new OnTrade());
-            var handle = new OrderBook().Subscribe("ETH-BTC", new OnOrderEntry());
-
+            var handle = new Trades().Subscribe("ETH-BTC", new OnTrade());
             await Task.Delay(60000);
+            handle.Dispose();
+        }
 
+        static async Task TestBinanceOrderBookEvents()
+        {
+            var handle = new OrderBook().Subscribe("ETH-BTC", new OnOrderEntry());
+            await Task.Delay(60000);
             handle.Dispose();
         }
 

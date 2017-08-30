@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NBinance.API.Push.Endpoints
 {
@@ -23,10 +21,9 @@ namespace NBinance.API.Push.Endpoints
                 formattedMarket = formattedMarket.Remove(indexOf, 1);
             }
 
-            var client = new JsonWebSocketClient<Trade>($"{baseEndpoint}{formattedMarket}@aggTrade")
+            var client = new JsonWebSocketClient2<Trade>($"{baseEndpoint}{formattedMarket}@aggTrade")
             {
                 OnDataHandler = onTradeEmitted,
-                ReconnectOnServerClose = true
             };
 
             client.Connect();
@@ -44,7 +41,7 @@ namespace NBinance.API.Push.Endpoints
 	    "q": "8.15632997",		// quantity
 	    "f": 77489,				// first breakdown trade id
 	    "l": 77489,				// last breakdown trade id
-	    "T": 1499405254324,		// trade time
+	    "T": 1499405254324,		// trade time  UNIX EPOCH TIME
 	    "m": false,				// whether buyer is a maker
 	    "M": true				// can be ignore
     } */

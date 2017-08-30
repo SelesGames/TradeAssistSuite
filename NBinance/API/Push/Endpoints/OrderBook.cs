@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 
 namespace NBinance.API.Push.Endpoints
@@ -26,10 +25,9 @@ namespace NBinance.API.Push.Endpoints
 
             var translator = new Translator(onOrderBookEventHandler);
 
-            var client = new JsonWebSocketClient<InternalOrderBookEvent>($"{baseEndpoint}{formattedMarket}@depth")
+            var client = new JsonWebSocketClient2<InternalOrderBookEvent>($"{baseEndpoint}{formattedMarket}@depth")
             {
                 OnDataHandler = translator,
-                ReconnectOnServerClose = true
             };
 
             client.Connect();

@@ -68,6 +68,7 @@ namespace Shared.Http
                     }
                     while (!receiveResult.EndOfMessage);
 
+                    ms.Seek(0, SeekOrigin.Begin);
 
                     // close socket if requested by server, return
                     if (receiveResult.MessageType == WebSocketMessageType.Close)

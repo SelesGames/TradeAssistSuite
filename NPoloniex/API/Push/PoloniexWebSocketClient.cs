@@ -201,7 +201,7 @@ namespace NPoloniex.API.Push
                                 Quantity = orderEntryArray[4].ToObject<string>(),
                                 UnixEpochTime = orderEntryArray[5].ToObject<long>(),
                             };
-                            OnTradeAction?.OnPriceChange(trade);
+                            OnTradeAction?.OnTradeEvent(trade);
                         }
                         else if (orderType == "o")
                         {
