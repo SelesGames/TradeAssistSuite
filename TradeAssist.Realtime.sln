@@ -23,8 +23,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeAssist.Realtime.Ticker
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "TradeAssist.Realtime.Shared.Hosting", "TradeAssist.Realtime.Shared.Hosting\TradeAssist.Realtime.Shared.Hosting.shproj", "{036709AE-6517-41CE-9DE8-A4A4A763B85B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeAssist.Realtime.Candlestick.ConsoleHost", "TradeAssist.Realtime.Candlestick.ConsoleHost\TradeAssist.Realtime.Candlestick.ConsoleHost.csproj", "{DF7F54E8-DF04-4B36-BF41-D07904850C9C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NBinance", "NBinance\NBinance.csproj", "{450520EE-AF5C-47A7-A2FA-98E7B487FB09}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Exchange Client Libraries", "Exchange Client Libraries", "{7C7E177A-5164-4756-B619-4963867D80CD}"
@@ -81,10 +79,6 @@ Global
 		{36B3C535-4C94-47BD-B1D9-D8C4993A5516}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36B3C535-4C94-47BD-B1D9-D8C4993A5516}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36B3C535-4C94-47BD-B1D9-D8C4993A5516}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DF7F54E8-DF04-4B36-BF41-D07904850C9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DF7F54E8-DF04-4B36-BF41-D07904850C9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DF7F54E8-DF04-4B36-BF41-D07904850C9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DF7F54E8-DF04-4B36-BF41-D07904850C9C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{450520EE-AF5C-47A7-A2FA-98E7B487FB09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{450520EE-AF5C-47A7-A2FA-98E7B487FB09}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{450520EE-AF5C-47A7-A2FA-98E7B487FB09}.Release|Any CPU.ActiveCfg = Release|Any CPU

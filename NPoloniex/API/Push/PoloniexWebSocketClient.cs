@@ -172,11 +172,11 @@ namespace NPoloniex.API.Push
                 {
                     case 1010:
                         OnHeartBeat();
-                        break;
+                        return;
                     case 1002:
                         if (data[1].ToObject<int?>() != 1)
                             OnTicker(data[2]);
-                        break;
+                        return;
                     default:
                         break;
                 }

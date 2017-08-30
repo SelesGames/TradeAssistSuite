@@ -13,7 +13,6 @@ namespace TradeMonitor.WebJob.Poloniex
             listener.Start().Wait();
             Console.WriteLine("Poloniex trade listener started");
             quitEvent.WaitOne();
-
         }
     }
 }

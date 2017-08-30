@@ -10,7 +10,7 @@ namespace TradeMonitor.WebJob.Poloniex
         {
             var client = new PoloniexWebSocketClient { OnTradeAction = this };
             await client.Connect();
-
+            await client.SubscribeToTrades("BTC_ETH");
         }
 
         public void OnTradeEvent(Trade trade)
