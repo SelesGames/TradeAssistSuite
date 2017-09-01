@@ -4,6 +4,24 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NPoloniex\NPoloniex.csproj" />
+    <None Remove="appsettings.json" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="appsettings.prod.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NPoloniex\NPoloniex.csproj" />
+    <ProjectReference Include="..\TradeMonitor.DocumentStorage\TradeMonitor.DocumentStorage.csproj" />
+  </ItemGroup>
+  <Import Project="..\TradeAssist.Realtime.Shared\TradeAssist.Realtime.Shared.projitems" Label="Shared" />
 </Project>

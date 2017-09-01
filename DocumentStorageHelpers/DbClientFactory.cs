@@ -1,7 +1,6 @@
 ﻿using Microsoft.Azure.Documents.Client;
-using System;
 
-namespace TradeAssist.DocumentStorage
+namespace DocumentStorageHelpers
 {
     public class DbClientFactory
     {
@@ -15,14 +14,6 @@ namespace TradeAssist.DocumentStorage
         {
             this.endpointUrl = endpointUrl;
             this.primaryKey = primaryKey;
-        }
-
-        public TADocumentClient Get()
-        {
-            if (string.IsNullOrEmpty(endpointUrl) || string.IsNullOrEmpty(primaryKey))
-                throw new InvalidOperationException("You must call SetCredentials before attempting Document DB access");
-
-            return new TADocumentClient(endpointUrl, primaryKey);
         }
 
         public DocumentClient GetDocumentClient()

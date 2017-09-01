@@ -15,7 +15,7 @@ namespace TradeAssist.Realtime
         public static readonly char BittrexSeparator = '-';
         public static readonly char PoloniexSeparator = '_';
 
-        public static string Canonical(string input, char separator, bool reverse = false)
+        public static string Canonical(string input, char separator, bool reverse = false, bool useLowercaseInsteadOfUpper = false)
         {
             var pairs = input.Split(separator);
 
@@ -33,7 +33,10 @@ namespace TradeAssist.Realtime
 
             string join(string a, string b)
             {
-                return $"{a.ToUpper(culture)}{CanonicalSeparator}{b.ToUpper(culture)}";
+                if (useLowercaseInsteadOfUpper)
+                    return $"{a.ToLower(culture)}{CanonicalSeparator}{b.ToLower(culture)}";
+                else
+                    return $"{a.ToUpper(culture)}{CanonicalSeparator}{b.ToUpper(culture)}";
             }
         }
 

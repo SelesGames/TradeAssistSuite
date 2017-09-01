@@ -49,6 +49,7 @@ namespace TradeAssist.DocumentStorage
 
 
 
+
         #region Initialization
 
         public static async Task InitializeDatabaseAndCollectionsAsync()
