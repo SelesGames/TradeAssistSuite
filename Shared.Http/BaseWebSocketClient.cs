@@ -19,8 +19,6 @@ namespace Shared.Http
         readonly ClientWebSocket client;
         readonly Uri uri;
 
-        static readonly Encoding readEncoding = Encoding.UTF8;
-
         bool isConnected = false;
         bool isReceiving = false;
         CancellationToken cancellationToken;
@@ -34,6 +32,8 @@ namespace Shared.Http
         public bool ReconnectOnServerClose { get; set; }
         public IWebSocketMessageHandler BinaryMessageHandler { get; set; }
         public IWebSocketMessageHandler TextMessageHandler { get; set; }
+        public Encoding Encoding { get; set; } = Encoding.UTF8;
+
 
         public Task Connect() { return Connect(CancellationToken.None); }
         public async Task Connect(CancellationToken cancellationToken)
@@ -92,6 +92,19 @@ namespace Shared.Http
         void OnHeartBeat()
         {
 
+        }
+
+        public Task SendString(string content)
+        {
+            var bytes = Encoding.GetBytes(content);
+            var buffer = new ArraySegment<byte>(bytes);
+            return client.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
+        }
+
+        public Task SendBytes(byte[] bytes)
+        {
+            var buffer = new ArraySegment<byte>(bytes);
+            return client.SendAsync(buffer, WebSocketMessageType.Binary, true, CancellationToken.None);
         }
 
         async Task CloseSocket(string closeDescription, bool isClientInitiated = false)

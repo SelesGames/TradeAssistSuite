@@ -1,23 +1,26 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Shared.Http;
 using System;
 using System.IO;
 using System.Linq;
-using System.Net.WebSockets;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace NPoloniex.API.Push
 {
-    public class PoloniexWebSocketClient
+    public class PoloniexWebSocketClient2 : IDisposable, IWebSocketMessageHandler
     {
-        static readonly Uri PoloniexWebSocketAddress = new Uri("wss://api2.poloniex.com:443");
+        const string PoloniexWebSocketAddress = "wss://api2.poloniex.com:443";
+        readonly BaseWebSocketClient client;
 
-        bool isConnected = false;
-        bool isReceiving = false;
-
-        ClientWebSocket client;
+        public PoloniexWebSocketClient2()
+        {
+            client = new BaseWebSocketClient(PoloniexWebSocketAddress)
+            {
+                ReconnectOnServerClose = true,
+                TextMessageHandler = this
+            };
+        }
 
         public IOnTradeAction OnTradeAction { get; set; }
         public IOnOrderAction OnOrderAction { get; set; }
@@ -58,79 +61,46 @@ namespace NPoloniex.API.Push
 
         Task SendString(string content)
         {
-            var bytes = Encoding.Default.GetBytes(content);
-            var buffer = new ArraySegment<byte>(bytes);
-            return client.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
+            return client.SendString(content);
         }
 
-        const int BUFFER_SIZE = 16 * 1024; // from http://referencesource.microsoft.com/#System/net/System/Net/WebSockets/WebSocketHelpers.cs,285b8b64a4da6851
-        readonly ArraySegment<byte> clientBuffer = ClientWebSocket.CreateClientBuffer(BUFFER_SIZE, BUFFER_SIZE);
-        static readonly Encoding readEncoding = Encoding.Default;
-
-        public async Task Connect()
+        public Task Connect()
         {
-            if (isConnected)
-                return;
-
-            client = new ClientWebSocket();
-            await client.ConnectAsync(PoloniexWebSocketAddress, CancellationToken.None);
-            isConnected = true;
-
-            BeginReceiveMessages();
+            return client.Connect();
         }
+
 
         // ^(\[187,.*) to only see order book for Gnosis
         // [187,10615808,[["o",1,"0.04490263","23.55422232"],["t","625586",0,"0.04490263","0.03820551",1503964002]]]
-        async void BeginReceiveMessages()
+        public void OnMessageReceived(MemoryStream ms)
         {
-            isReceiving = true;
+            JArray data = null;
+            Exception parseException = null;
+            var readEncoding = client.Encoding;
 
-            while (isReceiving)
+            try
             {
-                WebSocketReceiveResult receiveResult = null;
-
-                using (var ms = new MemoryStream())
+                using (var sr = new StreamReader(ms, readEncoding, false))
+                using (var reader = new JsonTextReader(sr))
                 {
-                    do
-                    {
-                        receiveResult = await client.ReceiveAsync(clientBuffer, CancellationToken.None);
-                        ms.Write(clientBuffer.Array, clientBuffer.Offset, receiveResult.Count);
-                    }
-                    while (!receiveResult.EndOfMessage);
-
-                    if (receiveResult.MessageType == WebSocketMessageType.Text)
-                    {
-                        JArray data = null;
-                        Exception parseException = null;
-
-                        ms.Seek(0, SeekOrigin.Begin);
-
-                        try
-                        {
-                            using (var sr = new StreamReader(ms, readEncoding, false))
-                            using (var reader = new JsonTextReader(sr))
-                            {
-                                data = JArray.Load(reader);
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            parseException = ex;
-                        }
-
-                        if (parseException != null)
-                        {
-                            var receivedString = readEncoding.GetString(clientBuffer.Array);
-                            Console.WriteLine($"Exception parsing {receivedString}:\r\n{parseException.ToString()}");
-                            continue;
-                        }
-
-                        ProcessDataArray(data);
-                    }
+                    data = JArray.Load(reader);
                 }
             }
+            catch (Exception ex)
+            {
+                parseException = ex;
+            }
 
-            void ProcessDataArray(JToken data)
+            if (parseException != null)
+            {
+                var receivedString = readEncoding.GetString(ms.GetBuffer());
+                Console.WriteLine($"Exception parsing {receivedString}:\r\n{parseException.ToString()}");
+                return;
+            }
+
+            ProcessDataArray();
+
+            void ProcessDataArray()
             {
                 int messageType = data[0].ToObject<int>();
 
@@ -213,10 +183,9 @@ namespace NPoloniex.API.Push
 
         }
 
-        void OnDisconnect()
+        public void Dispose()
         {
-            isReceiving = false;
-            isConnected = false;
+            client.Dispose();
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TradeAssist.Realtime.Ticker;
 using TradeAssist.Realtime.Ticker.Intelligence;
 using TAT = TradeAssist.Realtime.Trades;
+using System.Collections.Generic;
 
 namespace GeneralTester
 {
@@ -13,8 +14,8 @@ namespace GeneralTester
     {
         static void Main(string[] args)
         {
-            //TestArbitration().Wait();
-            TestBinanceTradeEvents().Wait();
+            TestArbitration().Wait();
+            //TestBinanceTradeEvents().Wait();
 
             //TestPoloniexTradeListening().Wait();
 
@@ -39,10 +40,10 @@ namespace GeneralTester
 
         static async Task TestArbitration()
         {
+            //await new ArbitrationPriceActionTracker().Begin();
+
             var priceTracker = PriceTracker.Current;
             await priceTracker.Initialize();
-
-
 
             while (true)
             {
@@ -56,6 +57,43 @@ namespace GeneralTester
                     Console.WriteLine(arbOpp);
                 Console.WriteLine($"Above calculations took {sw.ElapsedMilliseconds}ms to calculate");
                 Console.WriteLine();
+            }
+        }
+
+        class ArbitrationPriceActionTracker : IOnPriceChangeAction
+        {
+            SortedSet<string> sortedArbList = new SortedSet<string>();
+
+            public async Task Begin()
+            {
+                var priceTracker = PriceTracker.Current;
+                await priceTracker.Initialize();
+
+                var arbList = ArbitrationTracker.GetMarketsThatExchangeOnBothBtcAndEth(priceTracker.GetMarkets("poloniex"));
+                foreach (var item in arbList)
+                    sortedArbList.Add(item);
+
+                priceTracker.OnPriceChangeAction = this;
+            }
+
+            public void OnPriceChange(PriceChange pc)
+            {
+                if (sortedArbList.Contains(pc.CurrencyPair))
+                {
+                    var arbOpp = ArbitrationTracker
+                        .FindArbitrationOpportunitiesForExchangeCurrency(
+                            pc.Exchange, 
+                            getCurrencyPair(pc.CurrencyPair).currency);
+
+                    if (arbOpp != null)
+                        Console.WriteLine(arbOpp);
+                }
+
+                (string basePair, string currency) getCurrencyPair(string input)
+                {
+                    var split = input.Split('-');
+                    return (split[0], split[1]);
+                }
             }
         }
 

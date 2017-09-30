@@ -17,7 +17,27 @@ namespace NBittrex
 
         public BittrexHub()
         {
-            hubConnection = new HubConnection(BittrexConnectionString);
+            var queryStringData = new Dictionary<string, string>();
+            queryStringData.Add("clientProtocol", "1.2");
+            queryStringData.Add("connectionData", "%5B%7B%22name%22%3A%22corehub%22%7D%5D");
+            queryStringData.Add("_", DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString());
+
+            hubConnection = new HubConnection(BittrexConnectionString, queryStringData);
+
+            hubConnection.Headers.Add(
+                "User-Agent", 
+                "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Mobile Safari/537.36");
+            //hubConnection.Headers.Add("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+            hubConnection.Headers.Add("Connection", "keep-alive");
+            hubConnection.Headers.Add("DNT", "1");
+            hubConnection.Headers.Add("Origin", "https://bittrex.com");
+            hubConnection.Headers.Add("Referer", "https://bittrex.com/Market/Index?MarketName=BTC-cvc");
+
+            hubConnection.Headers.Add(
+                "Cookie",
+                "__cfduid=d120ac696405bc894bccd38861d2d13df1494188742; cf_clearance=13a453310832c34251a59bab994005fbd10de3ee-1505016634-10800; .AspNet.ApplicationCookie=t_MRD0AOWJx9MD32Ww21nmXLcu5K11vBnhlgmf6SU2Tp-g0NzwIIRK9ddvrBcJD_2Mkyy2hkE3FFJD1WHlZh_zUenlFN28Al5CT3SqtU9ePFiespHZRzRXbsQKD8ijSzShAoJsTNRboqasrwG4XnnjdC0JQL8WgtV3pU2G-fsrG7_8K88zU5Uw23VSrhzeiv04OPsOLakQNtLGq7KNPuUjer3_NvrQ6vh4_nlReyxB32AlzPGLgNkQQ_oMux6dPvqhyL_vyUAcbgdfzzwZeHyJFcjxtGXq7BraBpcI6kK4StHHBF62Ho95MO16TBWNTr8VNmASzRhGZj-8eqr7EyBnMMvRH_kAuVl7kl-ZwOvsCjikg0L-g6SLWtQIswIqyZ-KCz0AQXL7QwVkJ3ux60uYvIl7Bz1OORLe9g2KQKyPlUdFkXK4Fa8ms6PHf-3BNJ-0ZupJS7p0xx9pS3_V_pvv8TpCo");
+
+            hubConnection.Protocol = new Version("1.2");
             hubProxy = hubConnection.CreateHubProxy("coreHub");
         }
 
@@ -31,7 +51,15 @@ namespace NBittrex
             subscriptions.Add(
                 hubProxy.On<UpdateExchangeState>("updateExchangeState", OnUpdateExchangeState));
 
-            await hubConnection.Start();       
+            try
+            {
+                await hubConnection.Start();
+                Console.WriteLine("bittrex hub connected");
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"bittrex could not connect: {ex}");
+            }
         }
 
         /// <summary>

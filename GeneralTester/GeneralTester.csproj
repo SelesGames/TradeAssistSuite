@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PoloniexOrderBook.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -59,6 +60,10 @@
     <ProjectReference Include="..\NBinance\NBinance.csproj">
       <Project>{450520ee-af5c-47a7-a2fa-98e7b487fb09}</Project>
       <Name>NBinance</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NPoloniex\NPoloniex.csproj">
+      <Project>{161a9820-0240-4a01-be88-a7f8e2ca2380}</Project>
+      <Name>NPoloniex</Name>
     </ProjectReference>
     <ProjectReference Include="..\TradeAssist.Realtime.Ticker\TradeAssist.Realtime.Ticker.csproj">
       <Project>{36b3c535-4c94-47bd-b1d9-d8c4993a5516}</Project>
